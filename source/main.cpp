@@ -1,5 +1,18 @@
 #include <nds.h>
 
+#include <stdio.h>
+
+#define backgroundBitmapLen 65536
+u8 backgroundBitmap[65536];
+
+#define backgroundPalLen 512
+u16 backgroundPal[256] = {
+    0x0000, // Black
+    RGB15(31,0,0), // Red
+    RGB15(0,31,0), // Green
+    RGB15(0,0,31), // Blue
+};
+
 void initVideo() {
     /*
      * Map VRAM to display a background on the main and sub screens.
@@ -27,17 +40,25 @@ void initVideo() {
 
     /* Set the video mode on the main screen. */
     videoSetMode(MODE_5_2D | // Set the graphics mode to Mode 5
-                 DISPLAY_BG1_ACTIVE | // Enable BG3 for display
-                 DISPLAY_SPR_ACTIVE | // Enable sprites for display
-                 DISPLAY_SPR_1D );    // Enable 1D tiled sprites
+                 DISPLAY_BG3_ACTIVE);
+                 //DISPLAY_BG3_ACTIVE | // Enable BG3 for display
+                 //DISPLAY_SPR_ACTIVE | // Enable sprites for display
+                 //DISPLAY_SPR_1D );    // Enable 1D tiled sprites
 
     /* Set the video mode on the sub screen. */
     videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
                     DISPLAY_BG3_ACTIVE); // Enable BG3 for display
 }
 
-void initBackgrounds() {
+void fillBackground() {
+    for(u32 i = 0; i < 65536; i += 1)
+    {
+        backgroundBitmap[i] = 3;
+    }
+}
 
+void initBackgrounds() {
+    fillBackground();
 }
 
 void updateInput(touchPosition * touch) {
@@ -56,5 +77,13 @@ int main() {
     initVideo(); // Arrange VRAM Banks
     initBackgrounds(); // Configure the background control register
 
+	int bg3 = bgInit(3, BgType_Bmp8, BgSize_B8_256x256, 0,0);
+
+	dmaCopy(backgroundBitmap, bgGetGfxPtr(bg3), 256*256);
+	dmaCopy(backgroundPal, BG_PALETTE, 256*2);
+
+    consoleDemoInit();
+    iprintf("test");
+    while(1)swiWaitForVBlank();
 	return 0;
 }

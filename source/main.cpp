@@ -28,7 +28,7 @@ void initVideo() {
                      VRAM_C_SUB_BG_0x06200000,
                      VRAM_D_LCD);
 
-    vramSetBankE(VRAM_E_MAIN_SPRITE);
+    //vramSetBankE(VRAM_E_MAIN_SPRITE);
 
     /* Set the video mode on the main screen. */
     videoSetMode(MODE_5_2D | // Set the graphics mode to Mode 5
@@ -38,8 +38,8 @@ void initVideo() {
                  //DISPLAY_SPR_1D );    // Enable 1D tiled sprites
 
     /* Set the video mode on the sub screen. */
-    videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
-                    DISPLAY_BG3_ACTIVE); // Enable BG3 for display
+    //videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
+                    //DISPLAY_BG3_ACTIVE); // Enable BG3 for display
 }
 
 void initBackgrounds() {
@@ -52,7 +52,6 @@ void updateInput(touchPosition * touch) {
     // Update the touch scren values.
     touchRead(touch);
 }
-
 
 int main() {
     /* Turn on the 2D graphics core. */
@@ -68,23 +67,36 @@ int main() {
     mountain.Palette[RED]       =   RGB15(31,0,0);
     mountain.Palette[GREEN]     =   RGB15(0,31,0);
     mountain.Palette[BLUE]      =   RGB15(0,0,31);
-    mountain.fill(GREEN);
-    for( u16 i = 0; i < 256; i += 1)
-    {
-        mountain.setPixelPaletteIndex(i,0,RED);
-        mountain.setPixelPaletteIndex(i,191,RED);
-        mountain.setPixelPaletteIndex(0,i,RED);
-        mountain.setPixelPaletteIndex(255,i,RED);
-    }
+    mountain.Palette[DIRT]      =   RGB15(0,21,0);
+    mountain.Palette[DARKBG]    =   RGB15(7,4,5);
+    //mountain.fill(DARKBG);
+    //for( u16 i = 0; i < 256; i += 1)
+    //{
+        //mountain.setPixelPaletteIndex(i,0,RED);
+        //mountain.setPixelPaletteIndex(i,191,RED);
+        //mountain.setPixelPaletteIndex(0,i,RED);
+        //mountain.setPixelPaletteIndex(255,i,RED);
+    //}
     
 	int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
-	dmaCopy(mountain.Bitmap, bgGetGfxPtr(bg2), 256*192);
-	dmaCopy(mountain.Palette, BG_PALETTE, 256*2);
-
+    mountain.initLandscape();
+    mountain.fillLandscape();
     consoleDemoInit();
-    iprintf("%i\n", mountain.readPixelPaletteIndex(100,100));
-    iprintf("No Fail!");
-    while(1)swiWaitForVBlank();
+    //iprintf("test%i\n", mountain.groundheight[0]);
+    //iprintf("%i\n", mountain.groundheight[0]);
+
+    //iprintf("Cos(288):  %i\n", cosLerp(288 << 7));
+    //iprintf("%i\n", sizeof((u8[49152])mountain.Bitmap));
+
+    //iprintf("%i\n", mountain.groundheight[0]);
+    DC_FlushRange(mountain.Palette, (256 * 2));
+    dmaCopy(mountain.Palette, BG_PALETTE, 256*2);
+    iprintf("No Fail!\n");
+    while(1) {
+    swiWaitForVBlank();
+    DC_FlushRange(mountain.Bitmap, (256 * 192));
+    dmaCopy(mountain.Bitmap, bgGetGfxPtr(bg2), 256*192);
+    }
 	return 0;
 }

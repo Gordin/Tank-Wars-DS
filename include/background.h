@@ -7,6 +7,8 @@
 #define RED     1
 #define GREEN   2
 #define BLUE    3
+#define DIRT    4
+#define DARKBG  5
 
 class drawBackground {
     public:
@@ -21,9 +23,9 @@ class drawBackground {
 
         u8 *Bitmap;
         u16 *Palette;
-    private:
         u16 width;
         u8 height;
+    private:
     
         u16 getArrayPosition(u8 x, u8 y);
 };
@@ -33,8 +35,11 @@ class landscape: public drawBackground {
         landscape(u16 width);
         virtual ~landscape();
 
-        u8 * height;
+        void redrawColumn(u8 column);
+        void fillLandscape();
+        void initLandscape();
+
+        u8 * groundheight;
     private:
-        
 };
 

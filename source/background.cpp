@@ -1,3 +1,4 @@
+#include <nds.h>
 #include "background.h"
 
 drawBackground::drawBackground(u16 x, u8 y) {
@@ -8,6 +9,8 @@ drawBackground::drawBackground(u16 x, u8 y) {
 }
 
 drawBackground::drawBackground() {
+    width = SCREEN_WIDTH;
+    height = SCREEN_HEIGHT;
     Bitmap = new u8[BG_BITMAP_LEN];
     Palette = new u16[BG_PAL_LEN];
 }
@@ -40,9 +43,28 @@ u16 drawBackground::getArrayPosition(u8 x, u8 y) {
 }
 
 landscape::landscape(u16 width) {
-    height = new u8[width];
+    groundheight = new u8[width];
 }
 
 landscape::~landscape() {
-    delete height;
+    delete groundheight;
+}
+
+void landscape::redrawColumn(u8 column) {
+    for( u16 i = 0; i < groundheight[column]; i += 1) {
+        setPixelPaletteIndex(column, (height-1) - i, DIRT);
+    }
+}
+
+void landscape::fillLandscape() {
+    for( u16 i = 0; i < width; i += 1) {
+        redrawColumn(i);
+    }
+}
+
+void landscape::initLandscape() {
+    for( u16 i = 0; i < width; i += 1) {
+        groundheight[i] = ((cosLerp(i << 8) + (1 << 12)) >> 7) + 50 ;
+        //groundheight[i] = i & 127;
+    }
 }

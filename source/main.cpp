@@ -1,17 +1,9 @@
 #include <nds.h>
 
 #include <stdio.h>
+#include <assert.h>
 
-#define backgroundBitmapLen 65536
-u8 backgroundBitmap[65536];
-
-#define backgroundPalLen 512
-u16 backgroundPal[256] = {
-    0x0000, // Black
-    RGB15(31,0,0), // Red
-    RGB15(0,31,0), // Green
-    RGB15(0,0,31), // Blue
-};
+#include "background.h"
 
 void initVideo() {
     /*
@@ -40,7 +32,7 @@ void initVideo() {
 
     /* Set the video mode on the main screen. */
     videoSetMode(MODE_5_2D | // Set the graphics mode to Mode 5
-                 DISPLAY_BG3_ACTIVE);
+                 DISPLAY_BG2_ACTIVE);
                  //DISPLAY_BG3_ACTIVE | // Enable BG3 for display
                  //DISPLAY_SPR_ACTIVE | // Enable sprites for display
                  //DISPLAY_SPR_1D );    // Enable 1D tiled sprites
@@ -50,15 +42,8 @@ void initVideo() {
                     DISPLAY_BG3_ACTIVE); // Enable BG3 for display
 }
 
-void fillBackground() {
-    for(u32 i = 0; i < 65536; i += 1)
-    {
-        backgroundBitmap[i] = 3;
-    }
-}
-
 void initBackgrounds() {
-    fillBackground();
+
 }
 
 void updateInput(touchPosition * touch) {
@@ -67,6 +52,7 @@ void updateInput(touchPosition * touch) {
     // Update the touch scren values.
     touchRead(touch);
 }
+
 
 int main() {
     /* Turn on the 2D graphics core. */
@@ -77,13 +63,28 @@ int main() {
     initVideo(); // Arrange VRAM Banks
     initBackgrounds(); // Configure the background control register
 
-	int bg3 = bgInit(3, BgType_Bmp8, BgSize_B8_256x256, 0,0);
+    landscape mountain(256);
+    mountain.Palette[BLACK]     =   RGB15(0,0,0);
+    mountain.Palette[RED]       =   RGB15(31,0,0);
+    mountain.Palette[GREEN]     =   RGB15(0,31,0);
+    mountain.Palette[BLUE]      =   RGB15(0,0,31);
+    mountain.fill(GREEN);
+    for( u16 i = 0; i < 256; i += 1)
+    {
+        mountain.setPixelPaletteIndex(i,0,RED);
+        mountain.setPixelPaletteIndex(i,191,RED);
+        mountain.setPixelPaletteIndex(0,i,RED);
+        mountain.setPixelPaletteIndex(255,i,RED);
+    }
+    
+	int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
-	dmaCopy(backgroundBitmap, bgGetGfxPtr(bg3), 256*256);
-	dmaCopy(backgroundPal, BG_PALETTE, 256*2);
+	dmaCopy(mountain.Bitmap, bgGetGfxPtr(bg2), 256*192);
+	dmaCopy(mountain.Palette, BG_PALETTE, 256*2);
 
     consoleDemoInit();
-    iprintf("test");
+    iprintf("%i\n", mountain.readPixelPaletteIndex(100,100));
+    iprintf("No Fail!");
     while(1)swiWaitForVBlank();
 	return 0;
 }

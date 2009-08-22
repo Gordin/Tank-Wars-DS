@@ -1,11 +1,9 @@
-#include <nds.h>
-
-#include <stdio.h>
-#include <assert.h>
-
-#include "background.h"
+#include "includes_all.h"
+#include "includes_debug.h"
+#include "includes_main.h"
 
 void initVideo() {
+    // This stuff is copied from pataters tutorial (because it works... 0o)
     /*
      * Map VRAM to display a background on the main and sub screens.
      *
@@ -43,7 +41,23 @@ void initVideo() {
 }
 
 void initBackgrounds() {
+    consoleDemoInit(); // Need this for debug-output (iprintf)
+}
 
+void initLandscape(landscape &lnd) {
+    // Sets up the palette
+    lnd.Palette[BLACK]  =   BLACK_15BIT;
+    lnd.Palette[RED]    =   RED_15BIT;
+    lnd.Palette[GREEN]  =   GREEN_15BIT;
+    lnd.Palette[BLUE]   =   BLUE_15BIT;
+    lnd.Palette[DIRT]   =   DIRT_15BIT;
+    lnd.Palette[DARKBG] =   DARKBG_15BIT;
+    // Writes Palette to VRAM
+    DC_FlushRange(lnd.Palette, BG_PAL_LEN);
+    dmaCopy(lnd.Palette, BG_PALETTE, BG_PAL_LEN);
+    lnd.fill(BLUE); // makes all pixels of the background blue
+    lnd.initCosLandscape(); //Calculates heights for a Landscape
+    lnd.fillLandscape(); // Sets the landscape based on heights
 }
 
 void updateInput(touchPosition * touch) {
@@ -62,41 +76,21 @@ int main() {
     initVideo(); // Arrange VRAM Banks
     initBackgrounds(); // Configure the background control register
 
-    landscape mountain(256);
-    mountain.Palette[BLACK]     =   RGB15(0,0,0);
-    mountain.Palette[RED]       =   RGB15(31,0,0);
-    mountain.Palette[GREEN]     =   RGB15(0,31,0);
-    mountain.Palette[BLUE]      =   RGB15(0,0,31);
-    mountain.Palette[DIRT]      =   RGB15(0,21,0);
-    mountain.Palette[DARKBG]    =   RGB15(7,4,5);
-    //mountain.fill(DARKBG);
-    //for( u16 i = 0; i < 256; i += 1)
-    //{
-        //mountain.setPixelPaletteIndex(i,0,RED);
-        //mountain.setPixelPaletteIndex(i,191,RED);
-        //mountain.setPixelPaletteIndex(0,i,RED);
-        //mountain.setPixelPaletteIndex(255,i,RED);
-    //}
-    
+    landscape mountain; // Sets up (empty) landscap-background
+    initLandscape(mountain); // Put stuff in the landscape
+
+    // Sets up background preferences and stores background id in bg2
 	int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
-    mountain.initLandscape();
-    mountain.fillLandscape();
-    consoleDemoInit();
-    //iprintf("test%i\n", mountain.groundheight[0]);
-    //iprintf("%i\n", mountain.groundheight[0]);
-
-    //iprintf("Cos(288):  %i\n", cosLerp(288 << 7));
-    //iprintf("%i\n", sizeof((u8[49152])mountain.Bitmap));
-
-    //iprintf("%i\n", mountain.groundheight[0]);
-    DC_FlushRange(mountain.Palette, (256 * 2));
-    dmaCopy(mountain.Palette, BG_PALETTE, 256*2);
+    // *** Debug start ***
     iprintf("No Fail!\n");
-    while(1) {
-    swiWaitForVBlank();
-    DC_FlushRange(mountain.Bitmap, (256 * 192));
-    dmaCopy(mountain.Bitmap, bgGetGfxPtr(bg2), 256*192);
+    // *** Debug end   ***
+
+    while(1) { // Main game loop
+        swiWaitForVBlank();
+        DC_FlushRange(mountain.Bitmap, BG_BITMAP_LEN);
+        dmaCopy(mountain.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
     }
 	return 0;
 }
+

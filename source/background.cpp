@@ -1,18 +1,19 @@
-#include <nds.h>
+#include "includes_all.h"
+#include "includes_debug.h"
 #include "background.h"
 
-drawBackground::drawBackground(u16 x, u8 y) {
+drawBackground::drawBackground(u16 x, u16 y) {
     width = x;
     height = y;
     Bitmap = new u8[BG_BITMAP_LEN];
-    Palette = new u16[BG_PAL_LEN];
+    Palette = new u16[BG_PAL_LEN / 2];
 }
 
 drawBackground::drawBackground() {
     width = SCREEN_WIDTH;
     height = SCREEN_HEIGHT;
     Bitmap = new u8[BG_BITMAP_LEN];
-    Palette = new u16[BG_PAL_LEN];
+    Palette = new u16[BG_PAL_LEN / 2];
 }
 
 drawBackground::~drawBackground() {
@@ -39,20 +40,32 @@ void drawBackground::fill(u8 color) {
 }
 
 u16 drawBackground::getArrayPosition(u8 x, u8 y) {
-    return (y << 8) + x;
+    return (y << 8) + x; // Only works if width = 256
+    //return (y * width) + x; // Works for all widths
 }
 
-landscape::landscape(u16 width) {
+landscape::landscape() {
+    groundheight = new u8[SCREEN_WIDTH];
+    width = SCREEN_WIDTH;
+    height = SCREEN_HEIGHT;
+}
+
+landscape::landscape(u16 x, u16 y) {
     groundheight = new u8[width];
+    width = x;
+    height = y;
 }
 
 landscape::~landscape() {
     delete groundheight;
 }
 
-void landscape::redrawColumn(u8 column) {
-    for( u16 i = 0; i < groundheight[column]; i += 1) {
-        setPixelPaletteIndex(column, (height-1) - i, DIRT);
+void landscape::redrawColumn(u16 column) {
+    for(u16 i = 0; i < (height - groundheight[column] + 1); i++) {
+        setPixelPaletteIndex(column, i, BLUE);
+    }
+    for(u16 i = height - 1; i > (height - groundheight[column]); i--) {
+        setPixelPaletteIndex(column, i, DIRT);
     }
 }
 
@@ -62,9 +75,10 @@ void landscape::fillLandscape() {
     }
 }
 
-void landscape::initLandscape() {
+void landscape::initCosLandscape() {
     for( u16 i = 0; i < width; i += 1) {
+        // The 8 7 and 50 can be varied
         groundheight[i] = ((cosLerp(i << 8) + (1 << 12)) >> 7) + 50 ;
-        //groundheight[i] = i & 127;
     }
 }
+

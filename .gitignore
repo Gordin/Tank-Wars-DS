@@ -1,0 +1,8 @@
+/build/
+*.orig
+*~
+*.swp
+*.swo
+*.elf
+*.arm9
+*.nds

@@ -26,18 +26,18 @@ void initVideo() {
                      VRAM_C_SUB_BG_0x06200000,
                      VRAM_D_LCD);
 
-    //vramSetBankE(VRAM_E_MAIN_SPRITE);
+    vramSetBankE(VRAM_E_MAIN_SPRITE);
 
     /* Set the video mode on the main screen. */
     videoSetMode(MODE_5_2D | // Set the graphics mode to Mode 5
-                 DISPLAY_BG2_ACTIVE);
-                 //DISPLAY_BG3_ACTIVE | // Enable BG3 for display
-                 //DISPLAY_SPR_ACTIVE | // Enable sprites for display
-                 //DISPLAY_SPR_1D );    // Enable 1D tiled sprites
+                 DISPLAY_BG2_ACTIVE |
+                 DISPLAY_BG3_ACTIVE | // Enable BG3 for display
+                 DISPLAY_SPR_ACTIVE | // Enable sprites for display
+                 DISPLAY_SPR_1D );    // Enable 1D tiled sprites
 
     /* Set the video mode on the sub screen. */
-    //videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
-                    //DISPLAY_BG3_ACTIVE); // Enable BG3 for display
+    videoSetModeSub(MODE_5_2D | // Set the graphics mode to Mode 5
+                    DISPLAY_BG3_ACTIVE); // Enable BG3 for display
 }
 
 void initBackgrounds() {
@@ -67,6 +67,10 @@ void updateInput(touchPosition * touch) {
     touchRead(touch);
 }
 
+void spritestuff() {
+
+}
+
 int main() {
     /* Turn on the 2D graphics core. */
     powerOn(POWER_ALL_2D);
@@ -82,10 +86,43 @@ int main() {
     // Sets up background preferences and stores background id in bg2
     int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
+
+
+
+    // *** Spritestuff start ***
+    oamInit(&oamMain, SpriteMapping_1D_32, false);
+    u16* gfx = oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_256Color);
+    for(u8 i = 0; i < 16 * 16 / 2; i++)
+    {
+        gfx[i] = 1 | (1 << 8);
+    }
+
+    SPRITE_PALETTE[1] = RGB15(31,0,0);
+    
+    oamSet(&oamMain,        //main graphics engine context
+        0,                  //oam index (0 to 127)
+        10, 10,             //x and y pixle location of the sprite
+        0,                  //priority, lower renders last (on top)
+        0,                  //this is the palette index if multiple palettes or the alpha value if bmp sprite
+        SpriteSize_16x16,
+        SpriteColorFormat_256Color,
+        gfx,                //pointer to the loaded graphics
+        -1,                 //sprite rotation data
+        false,              //double the size when rotating?
+        false,              //hide the sprite?
+        false, false,       //vflip, hflip
+        false               //apply mosaic
+        );
+    oamUpdate(&oamMain);
+    // *** Spritestuff end   ***
+    
+    
+    
+    
     // *** Debug start ***
     iprintf("No Fail!\n");
     // *** Debug end   ***
-
+    
     while(1) { // Main game loop
         mountain.dropLandscape();
         swiWaitForVBlank();

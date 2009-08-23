@@ -25,9 +25,9 @@ class drawBackground {
         virtual ~drawBackground();
 
         u16 readPixelColor(u8 x, u8 y);
-        // inline because those will be called about 3.000.000 times per second
-        inline u8 readPixelPaletteIndex(u8 x, u8 y);
-        inline void setPixelPaletteIndex(u8 x, u8 y, u8 colorIndex);
+        // inline because those will be called all the time 0o
+        inline u8 getPixColorI(u8 x, u8 y);
+        inline void setPixColorI(u8 x, u8 y, u8 colorIndex);
         void fill(u8 color);
 
         u8 *Bitmap;
@@ -47,6 +47,8 @@ class landscape: public drawBackground {
         void redrawColumn(u16 column);
         void fillLandscape();
         void initCosLandscape();
+        void dropColumn(u16 column);
+        void dropLandscape();
 
         u8 * groundheight;
     private:

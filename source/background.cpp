@@ -21,14 +21,14 @@ drawBackground::~drawBackground() {
 }
 
 u16 drawBackground::readPixelColor(u8 x, u8 y) {
-    return Palette[readPixelPaletteIndex(x,y)];
+    return Palette[getPixColorI(x,y)];
 }
 
-u8 drawBackground::readPixelPaletteIndex(u8 x, u8 y) {
+u8 drawBackground::getPixColorI(u8 x, u8 y) {
     return Bitmap[getArrayPosition(x,y)];
 }
 
-void drawBackground::setPixelPaletteIndex(u8 x, u8 y, u8 colorIndex) {
+void drawBackground::setPixColorI(u8 x, u8 y, u8 colorIndex) {
     Bitmap[getArrayPosition(x,y)] = colorIndex;
 }
 
@@ -61,11 +61,12 @@ landscape::~landscape() {
 }
 
 void landscape::redrawColumn(u16 column) {
+    //TODO Change DIRT and BLUE back (test for landscape dropping)
     for(u16 i = 0; i < (height - groundheight[column] + 1); i++) {
-        setPixelPaletteIndex(column, i, BLUE);
+        setPixColorI(column, i, DIRT);
     }
     for(u16 i = height - 1; i > (height - groundheight[column]); i--) {
-        setPixelPaletteIndex(column, i, DIRT);
+        setPixColorI(column, i, BLUE);
     }
 }
 
@@ -79,6 +80,26 @@ void landscape::initCosLandscape() {
     for( u16 i = 0; i < width; i += 1) {
         // The 8 7 and 50 can be varied
         groundheight[i] = ((cosLerp(i << 8) + (1 << 12)) >> 7) + 50 ;
+    }
+}
+
+void landscape::dropColumn(u16 column) {
+    for(u16 i = (height -1); i > 0; i--)
+    {
+        if( (getPixColorI(column, i-1) == DIRT) &&
+                        (getPixColorI(column, i) == BLUE) ){
+            for( u16 k = i; k > 0; k--) {
+                setPixColorI(column, k, getPixColorI(column, k-1) );
+            }
+            setPixColorI(column, 0, BLUE);
+            break;
+        }
+    }
+}
+
+void landscape::dropLandscape() {
+    for( u16 i = 0; i < width; i++) {
+        dropColumn(i);
     }
 }
 

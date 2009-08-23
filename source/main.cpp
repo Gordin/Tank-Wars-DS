@@ -80,17 +80,18 @@ int main() {
     initLandscape(mountain); // Put stuff in the landscape
 
     // Sets up background preferences and stores background id in bg2
-	int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
+    int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
     // *** Debug start ***
     iprintf("No Fail!\n");
     // *** Debug end   ***
 
     while(1) { // Main game loop
+        mountain.dropLandscape();
         swiWaitForVBlank();
         DC_FlushRange(mountain.Bitmap, BG_BITMAP_LEN);
         dmaCopy(mountain.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
     }
-	return 0;
+    return 0;
 }
 

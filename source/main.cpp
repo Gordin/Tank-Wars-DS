@@ -86,38 +86,55 @@ int main() {
     // Sets up background preferences and stores background id in bg2
     int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
-
-
-
     // *** Spritestuff start ***
-    oamInit(&oamMain, SpriteMapping_1D_32, false);
-    u16* gfx = oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_256Color);
-    for(u8 i = 0; i < 16 * 16 / 2; i++)
-    {
-        gfx[i] = 1 | (1 << 8);
-    }
 
-    SPRITE_PALETTE[1] = RGB15(31,0,0);
+    oamInit(&oamMain, SpriteMapping_1D_32, false);
+
+
+    object tank(0, TANK);
+
+    u8 color = 1;
+    // Handmade tanksprite
+    // Left part 1. row
+    tank.gfx[ 1] =     0 | color    << 8;
+    tank.gfx[ 2] = color | color    << 8;
+    // Left part 2. row
+    tank.gfx[ 4] =     0 | color    << 8;
+    tank.gfx[ 5] = color | color    << 8;
+    tank.gfx[ 6] = color | color    << 8;
+    tank.gfx[ 7] = color | color    << 8;
+    // Left part 3. row
+    tank.gfx[ 8] =     0 | color    << 8;
+    tank.gfx[ 9] = color | color    << 8;
+    tank.gfx[10] = color | color    << 8;
+    tank.gfx[11] = color | color    << 8;
+    // Left part 4. row
+    tank.gfx[12] = color | color    << 8;
+    tank.gfx[13] = color |     0    << 8;
+    tank.gfx[14] = color |     0    << 8;
+    tank.gfx[15] = color | color    << 8;
+    // Left part 5. row
+    tank.gfx[16] = color | color    << 8;
+    tank.gfx[17] = color | color    << 8;
+    tank.gfx[18] = color | color    << 8;
+    tank.gfx[19] = color | color    << 8;
+    // Right part 4. row
+    tank.gfx[44] = color |     0    << 8;
+    // Right part 5. row
+    tank.gfx[48] = color |     0    << 8;
+
+
+    object bomb(1, BOMB);
+
+    // every value has 2! Pixels (1 Pixel -> 8 Bit)
+    bomb.gfx[0] = 0 | 1    << 8; // The Bomb
+    bomb.gfx[4] = 1 | 1    << 8; // 0 1 0
+    bomb.gfx[5] = 1 | 0    << 8; // 1 1 1
+    bomb.gfx[8] = 0 | 1    << 8; // 0 1 0
+
+    SPRITE_PALETTE[1] = RGB15(31,31,31);
     
-    oamSet(&oamMain,        //main graphics engine context
-        0,                  //oam index (0 to 127)
-        10, 10,             //x and y pixle location of the sprite
-        0,                  //priority, lower renders last (on top)
-        0,                  //this is the palette index if multiple palettes or the alpha value if bmp sprite
-        SpriteSize_16x16,
-        SpriteColorFormat_256Color,
-        gfx,                //pointer to the loaded graphics
-        -1,                 //sprite rotation data
-        false,              //double the size when rotating?
-        false,              //hide the sprite?
-        false, false,       //vflip, hflip
-        false               //apply mosaic
-        );
-    oamUpdate(&oamMain);
     // *** Spritestuff end   ***
-    
-    
-    
     
     // *** Debug start ***
     iprintf("No Fail!\n");
@@ -126,6 +143,7 @@ int main() {
     while(1) { // Main game loop
         mountain.dropLandscape();
         swiWaitForVBlank();
+        oamUpdate(&oamMain);
         DC_FlushRange(mountain.Bitmap, BG_BITMAP_LEN);
         dmaCopy(mountain.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
     }

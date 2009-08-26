@@ -15,19 +15,11 @@ class object {
         object (u8 id, u8 type);
         virtual ~object();
 
-        inline void setX(u16 X) {
-            position.x = X;
-        }
-        inline void setY(u16 Y) {
-            position.y = Y;
-        }
-        inline void setXY(u16 X, u16 Y) {
-            position.x = X;
-            position.y = Y;
-        }
-        inline void setHide(bool hide){
-            this->hide = hide;
-        }
+        void setX(u16 X);
+        void setY(u16 Y);
+        void setXY(u16 X, u16 Y);
+        void setHide(bool hide);
+
         void updateOAM();
 
         static u8 count;
@@ -50,4 +42,21 @@ class object {
         SpriteSize spriteSize;
     private:
 };
+
+inline void object::setX(u16 X) {
+    position.x = X;
+}
+
+inline void object::setY(u16 Y) {
+    position.y = Y;
+}
+
+inline void object::setXY(u16 X, u16 Y) {
+    position.x = X;
+    position.y = Y;
+}
+
+inline void object::setHide(bool hide){
+    this->hide = hide;
+}
 

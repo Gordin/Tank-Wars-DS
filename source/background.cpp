@@ -2,9 +2,9 @@
 #include "includes_debug.h"
 #include "background.h"
 
-drawBackground::drawBackground(u16 x, u16 y) {
-    width = x;
-    height = y;
+drawBackground::drawBackground(u16 width, u16 height) {
+    this->width = width;
+    this->height = height;
     Bitmap = new u8[BG_BITMAP_LEN];
     Palette = new u16[BG_PAL_LEN / 2];
 }

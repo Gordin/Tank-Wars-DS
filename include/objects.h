@@ -1,8 +1,8 @@
 #include "includes_all.h"
 #include "includes_debug.h"
 
-#define BOMB    1
-#define TANK    2
+#define BOMB    0
+#define TANK    1
 
 template <class T>
 struct xyPair {
@@ -12,10 +12,18 @@ struct xyPair {
 
 class object {
     public:
-        object (u8 object_id, u8 object_type);
+        object (u8 id, u8 type);
         virtual ~object();
 
-        
+        inline void setX(u16 X);
+        inline void setY(u16 Y);
+        inline void setXY(u16 X, u16 Y);
+        void updateOAM();
+
+        static u8 count;
+        static u16 tanksprite[64];
+        static u16 bombsprite[32];
+
         u8 id;
         u8 type;
         u8 palette;
@@ -30,5 +38,5 @@ class object {
         u16 * gfx;
         SpriteSize spriteSize;
     private:
-        
 };
+

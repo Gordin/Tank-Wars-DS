@@ -10,6 +10,7 @@
 #define BLUE            3
 #define DIRT            4
 #define DARKBG          5
+#define WHITE           6
 // 15 Bit colorvalue for palette-colors
 #define BLACK_15BIT     RGB15( 0, 0, 0);
 #define RED_15BIT       RGB15(31, 0, 0);
@@ -17,10 +18,11 @@
 #define BLUE_15BIT      RGB15( 0, 0,31);
 #define DIRT_15BIT      RGB15( 0,21, 0);
 #define DARKBG_15BIT    RGB15( 7, 4, 5);
+#define WHITE_15BIT     RGB15(31,31,31);
 
 class drawBackground {
     public:
-        drawBackground(u16 x, u16 y);
+        drawBackground(u16 width, u16 height);
         drawBackground();
         virtual ~drawBackground();
 

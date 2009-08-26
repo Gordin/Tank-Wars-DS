@@ -52,12 +52,24 @@ void initLandscape(landscape &lnd) {
     lnd.Palette[BLUE]   =   BLUE_15BIT;
     lnd.Palette[DIRT]   =   DIRT_15BIT;
     lnd.Palette[DARKBG] =   DARKBG_15BIT;
+    lnd.Palette[WHITE]  =   WHITE_15BIT;
     // Writes Palette to VRAM
     DC_FlushRange(lnd.Palette, BG_PAL_LEN);
     dmaCopy(lnd.Palette, BG_PALETTE, BG_PAL_LEN);
     lnd.fill(BLUE); // makes all pixels of the background blue
     lnd.initCosLandscape(); //Calculates heights for a Landscape
     lnd.fillLandscape(); // Sets the landscape based on heights
+}
+
+void initObjects(landscape &lnd) {
+    /* We just copy over the background palette for sprites, because
+     * We don't really need that much different colors...
+     */
+    for( u16 i = 0; i < BG_PAL_LEN / 2; i++) {
+        SPRITE_PALETTE[i] = lnd.Palette[i];
+    }
+    // This tells the DS how the sprite data is formatted
+    oamInit(&oamMain, SpriteMapping_1D_32, false);
 }
 
 void updateInput(touchPosition * touch) {
@@ -68,7 +80,6 @@ void updateInput(touchPosition * touch) {
 }
 
 void spritestuff() {
-
 }
 
 int main() {
@@ -86,56 +97,15 @@ int main() {
     // Sets up background preferences and stores background id in bg2
     int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
-    // *** Spritestuff start ***
+    initObjects(mountain); // Sets stuff so objects will works
 
-    oamInit(&oamMain, SpriteMapping_1D_32, false);
+    // Create 2 players (Gotta do this in an array)
+    player tank(1);
+    player tank2(2);
 
+    // Create 1 bomb
+    object bomb(4, BOMB);
 
-    object tank(0, TANK);
-
-    u8 color = 1;
-    // Handmade tanksprite
-    // Left part 1. row
-    tank.gfx[ 1] =     0 | color    << 8;
-    tank.gfx[ 2] = color | color    << 8;
-    // Left part 2. row
-    tank.gfx[ 4] =     0 | color    << 8;
-    tank.gfx[ 5] = color | color    << 8;
-    tank.gfx[ 6] = color | color    << 8;
-    tank.gfx[ 7] = color | color    << 8;
-    // Left part 3. row
-    tank.gfx[ 8] =     0 | color    << 8;
-    tank.gfx[ 9] = color | color    << 8;
-    tank.gfx[10] = color | color    << 8;
-    tank.gfx[11] = color | color    << 8;
-    // Left part 4. row
-    tank.gfx[12] = color | color    << 8;
-    tank.gfx[13] = color |     0    << 8;
-    tank.gfx[14] = color |     0    << 8;
-    tank.gfx[15] = color | color    << 8;
-    // Left part 5. row
-    tank.gfx[16] = color | color    << 8;
-    tank.gfx[17] = color | color    << 8;
-    tank.gfx[18] = color | color    << 8;
-    tank.gfx[19] = color | color    << 8;
-    // Right part 4. row
-    tank.gfx[44] = color |     0    << 8;
-    // Right part 5. row
-    tank.gfx[48] = color |     0    << 8;
-
-
-    object bomb(1, BOMB);
-
-    // every value has 2! Pixels (1 Pixel -> 8 Bit)
-    bomb.gfx[0] = 0 | 1    << 8; // The Bomb
-    bomb.gfx[4] = 1 | 1    << 8; // 0 1 0
-    bomb.gfx[5] = 1 | 0    << 8; // 1 1 1
-    bomb.gfx[8] = 0 | 1    << 8; // 0 1 0
-
-    SPRITE_PALETTE[1] = RGB15(31,31,31);
-    
-    // *** Spritestuff end   ***
-    
     // *** Debug start ***
     iprintf("No Fail!\n");
     // *** Debug end   ***

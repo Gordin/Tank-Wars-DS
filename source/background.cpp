@@ -20,16 +20,8 @@ drawBackground::~drawBackground() {
     delete Bitmap;
 }
 
-u16 drawBackground::readPixelColor(u8 x, u8 y) {
+u16 drawBackground::getPixColor(u8 x, u8 y) {
     return Palette[getPixColorI(x,y)];
-}
-
-u8 drawBackground::getPixColorI(u8 x, u8 y) {
-    return Bitmap[getArrayPosition(x,y)];
-}
-
-void drawBackground::setPixColorI(u8 x, u8 y, u8 colorIndex) {
-    Bitmap[getArrayPosition(x,y)] = colorIndex;
 }
 
 void drawBackground::fill(u8 color) {
@@ -37,11 +29,6 @@ void drawBackground::fill(u8 color) {
     {
         Bitmap[i] = color;
     }
-}
-
-u16 drawBackground::getArrayPosition(u8 x, u8 y) {
-    return (y << 8) + x; // Only works if width = 256
-    //return (y * width) + x; // Works for all widths
 }
 
 landscape::landscape() {

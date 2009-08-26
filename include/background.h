@@ -26,10 +26,14 @@ class drawBackground {
         drawBackground();
         virtual ~drawBackground();
 
-        u16 readPixelColor(u8 x, u8 y);
+        u16 getPixColor(u8 x, u8 y);
         // inline because those will be called all the time 0o
-        inline u8 getPixColorI(u8 x, u8 y);
-        inline void setPixColorI(u8 x, u8 y, u8 colorIndex);
+        inline u8 getPixColorI(u8 x, u8 y) {
+            return Bitmap[getArrayPosition(x,y)];
+        }
+        inline void setPixColorI(u8 x, u8 y, u8 colorIndex) {
+            Bitmap[getArrayPosition(x,y)] = colorIndex;
+        }
         void fill(u8 color);
 
         u8 *Bitmap;
@@ -37,7 +41,10 @@ class drawBackground {
         u16 width;
         u16 height;
     private:
-        inline u16 getArrayPosition(u8 x, u8 y);
+        inline u16 getArrayPosition(u8 x, u8 y) {
+            return (y << 8) + x; // Only works if width = 256
+            //return (y * width) + x; // Works for all widths
+        }
 };
 
 class landscape: public drawBackground {

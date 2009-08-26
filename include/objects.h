@@ -15,10 +15,19 @@ class object {
         object (u8 id, u8 type);
         virtual ~object();
 
-        inline void setX(u16 X);
-        inline void setY(u16 Y);
-        inline void setXY(u16 X, u16 Y);
-        inline void setHide(bool hide);
+        inline void setX(u16 X) {
+            position.x = X;
+        }
+        inline void setY(u16 Y) {
+            position.y = Y;
+        }
+        inline void setXY(u16 X, u16 Y) {
+            position.x = X;
+            position.y = Y;
+        }
+        inline void setHide(bool hide){
+            this->hide = hide;
+        }
         void updateOAM();
 
         static u8 count;

@@ -70,23 +70,6 @@ object::~object() {
 
 }
 
-void object::setX(u16 X) {
-    position.x = X;
-}
-
-void object::setY(u16 Y) {
-    position.y = Y;
-}
-
-void object::setXY(u16 X, u16 Y) {
-    position.x = X;
-    position.y = Y;
-}
-
-void object::setHide(bool hide) {
-    this->hide = hide;
-}
-
 void object::updateOAM() {
     // Writes properties of the object into oam (I guess)
     oamSet(&oamMain,           //main graphics engine context

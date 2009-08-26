@@ -1,6 +1,7 @@
 #include "includes_all.h"
 #include "includes_debug.h"
-#include "includes_main.h"
+#include "background.h"
+#include "players.h"
 
 void initVideo() {
     // This stuff is copied from pataters tutorial (because it works... 0o)
@@ -105,6 +106,8 @@ int main() {
 
     // Create 1 bomb
     object bomb(4, BOMB);
+    //bomb.setY(50);
+    bomb.setHide(false);
 
     // *** Debug start ***
     iprintf("No Fail!\n");

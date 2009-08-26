@@ -11,11 +11,11 @@ void initVideo() {
      * The vramSetMainBanks function takes four arguments, one for each of the
      * major VRAM banks. We can use it as shorthand for assigning values to
      * each of the VRAM bank's control registers.
-     * 
+     *
      * We map  banks A and B to main screen background memory. This gives us
      * 256KB, which is a healty amount for 16-bit graphics.
      *
-     * We map bank C to sub screen background memory. 
+     * We map bank C to sub screen background memory.
      *
      * We map bank D to LCD. This setting is generally used for when we aren't
      * using a particular bank.
@@ -47,17 +47,26 @@ void initBackgrounds() {
 
 void initLandscape(landscape &lnd) {
     // Sets up the palette
-    lnd.Palette[BLACK]  =   BLACK_15BIT;
-    lnd.Palette[RED]    =   RED_15BIT;
-    lnd.Palette[GREEN]  =   GREEN_15BIT;
-    lnd.Palette[BLUE]   =   BLUE_15BIT;
-    lnd.Palette[DIRT]   =   DIRT_15BIT;
-    lnd.Palette[DARKBG] =   DARKBG_15BIT;
-    lnd.Palette[WHITE]  =   WHITE_15BIT;
-    // Writes Palette to VRAM
+    lnd.Palette[BLACK]      =   BLACK_15BIT;
+    lnd.Palette[RED]        =   RED_15BIT;
+    lnd.Palette[GREEN]      =   GREEN_15BIT;
+    lnd.Palette[BLUE]       =   BLUE_15BIT;
+    lnd.Palette[YELLOW]     =   YELLOW_15BIT;
+    lnd.Palette[TURQUIS]    =   TURQUIS_15BIT;
+    lnd.Palette[PURPLE]     =   PURPLE_15BIT;
+    lnd.Palette[WHITE]      =   WHITE_15BIT;
+    lnd.Palette[ORANGE]     =   ORANGE_15BIT;
+    lnd.Palette[MAGENTA]    =   MAGENTA_15BIT;
+    lnd.Palette[SALMON]     =   SALMON_15BIT;
+    lnd.Palette[DIRT]       =   DIRT_15BIT;
+    lnd.Palette[DARKBG]     =   DARKBG_15BIT;
+    // Gets the DS ready to write to VRAM
     DC_FlushRange(lnd.Palette, BG_PAL_LEN);
+    // Writes Palette to VRAM
     dmaCopy(lnd.Palette, BG_PALETTE, BG_PAL_LEN);
-    lnd.fill(BLUE); // makes all pixels of the background blue
+    lnd.colorI = DIRT;
+    lnd.backgroundColorI = DARKBG;
+    lnd.fill(lnd.backgroundColorI); // makes all pixels of the background blue
     lnd.initCosLandscape(); //Calculates heights for a Landscape
     lnd.fillLandscape(); // Sets the landscape based on heights
 }
@@ -80,7 +89,7 @@ void updateInput(touchPosition * touch) {
     touchRead(touch);
 }
 
-void spritestuff() {
+void updateObjects() {
 }
 
 int main() {
@@ -100,26 +109,26 @@ int main() {
 
     initObjects(mountain); // Sets stuff so objects will works
 
-    // Create 2 players (Gotta do this in an array)
-    player tank(1);
-    player tank2(2);
+    // Create 10 players
+    playerset players(10);
+    //players.all[0].setHide(true);
 
     // Create 1 bomb
-    object bomb(4, BOMB);
-    //bomb.setY(50);
-    bomb.setHide(false);
+    object bomb(15, BOMB);
+    bomb.setXY(50, 50);
+    bomb.updateOAM();
 
     // *** Debug start ***
     iprintf("No Fail!\n");
     // *** Debug end   ***
-    
+
     while(1) { // Main game loop
         mountain.dropLandscape();
         swiWaitForVBlank();
+        players.updateOAM();
         oamUpdate(&oamMain);
         DC_FlushRange(mountain.Bitmap, BG_BITMAP_LEN);
         dmaCopy(mountain.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
     }
     return 0;
 }
-

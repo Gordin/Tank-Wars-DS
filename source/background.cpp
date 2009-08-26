@@ -48,12 +48,12 @@ landscape::~landscape() {
 }
 
 void landscape::redrawColumn(u16 column) {
-    //TODO Change DIRT and BLUE back (test for landscape dropping)
+    //TODO Change calor and backgroundColor back (test for landscape dropping)
     for(u16 i = 0; i < (height - groundheight[column] + 1); i++) {
-        setPixColorI(column, i, DIRT);
+        setPixColorI(column, i, colorI);
     }
     for(u16 i = height - 1; i > (height - groundheight[column]); i--) {
-        setPixColorI(column, i, BLUE);
+        setPixColorI(column, i, backgroundColorI);
     }
 }
 
@@ -73,12 +73,12 @@ void landscape::initCosLandscape() {
 void landscape::dropColumn(u16 column) {
     for(u16 i = (height -1); i > 0; i--)
     {
-        if( (getPixColorI(column, i-1) == DIRT) &&
-                        (getPixColorI(column, i) == BLUE) ){
+        if( (getPixColorI(column, i-1) == colorI) &&
+                        (getPixColorI(column, i) == backgroundColorI) ){
             for( u16 k = i; k > 0; k--) {
                 setPixColorI(column, k, getPixColorI(column, k-1) );
             }
-            setPixColorI(column, 0, BLUE);
+            setPixColorI(column, 0, backgroundColorI);
             break;
         }
     }

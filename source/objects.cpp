@@ -40,9 +40,12 @@ object::object(u8 id, u8 type) {
     this->type = type;
     if(type == TANK) {
         spriteSize = SpriteSize_16x8;
+        // oamAllocateGfx allocates memory for the object-sprite
         gfx = oamAllocateGfx(&oamMain, spriteSize,
                              SpriteColorFormat_256Color);
+        // This copies the sprite into the object (wrong
         memcpy(this->gfx, object::tanksprite, sizeof(object::tanksprite));
+        // This loop replaces the object-color with the player-color
         for(u16 i = 0; i < sizeof(object::tanksprite) / 2; i++) {
             if(object::tanksprite[i] == TSC) {
                 this->gfx[i] = id;
@@ -54,15 +57,17 @@ object::object(u8 id, u8 type) {
         }
     } else  if (type == BOMB) {
         spriteSize = SpriteSize_8x8;
+        // oamAllocateGfx allocates memory for the object-sprite
         gfx = oamAllocateGfx(&oamMain, spriteSize,
                              SpriteColorFormat_256Color);
+        // This copies the sprite into the object
         memcpy(this->gfx, object::bombsprite, sizeof(object::bombsprite));
     }
     this->id = id;
 
 
-    position.x = 10 << id;
-    position.y = 10;
+    position.x = 15 * id;
+    position.y = 150;
     updateOAM();
 }
 

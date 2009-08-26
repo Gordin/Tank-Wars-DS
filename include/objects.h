@@ -18,6 +18,7 @@ class object {
         inline void setX(u16 X);
         inline void setY(u16 Y);
         inline void setXY(u16 X, u16 Y);
+        inline void setHide(bool hide);
         void updateOAM();
 
         static u8 count;
@@ -27,6 +28,7 @@ class object {
         u8 id;
         u8 type;
         u8 palette;
+        bool hide;
         xyPair<u8> center;
         xyPair<u16> position;
         xyPair<u8> speed;

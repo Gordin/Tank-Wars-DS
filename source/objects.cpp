@@ -83,6 +83,10 @@ void object::setXY(u16 X, u16 Y) {
     position.y = Y;
 }
 
+void object::setHide(bool hide) {
+    this->hide = hide;
+}
+
 void object::updateOAM() {
     // Writes properties of the object into oam (I guess)
     oamSet(&oamMain,           //main graphics engine context
@@ -97,7 +101,7 @@ void object::updateOAM() {
            gfx,                //pointer to the loaded graphics
            -1,                 //sprite rotation data
            false,              //double the size when rotating?
-           false,              //hide the sprite?
+           hide,               //hide the sprite?
            false, false,       //vflip, hflip
            false );            //apply mosaic
 }

@@ -2,6 +2,7 @@
 #include "includes_debug.h"
 #include "background.h"
 #include "players.h"
+#include "physics.h"
 
 void initVideo() {
     // This stuff is copied from pataters tutorial (because it works... 0o)
@@ -118,11 +119,21 @@ int main() {
     bomb.setXY(50, 50);
     bomb.updateOAM();
 
+    // init physics
+    xyPair bla;
+    bla.x = 0;
+    bla.y = 1;
+    physicsEngine physics(bla);
+
+    players.all[0].acceleration.x = 0;
+    players.all[0].acceleration.y = 0;
+
     // *** Debug start ***
     iprintf("No Fail!\n");
     // *** Debug end   ***
 
     while(1) { // Main game loop
+        physics.applyGravity(players.all[0]);
         mountain.dropLandscape();
         swiWaitForVBlank();
         players.updateOAM();

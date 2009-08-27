@@ -7,14 +7,15 @@
 #define BOMB    0
 #define TANK    1
 
-template <class T>
 class xyPair {
     public:
         xyPair () {};
+        //virtual ~xyPair();
         xyPair operator + (xyPair);
+        xyPair& operator += (xyPair);
 
-        T x;
-        T y;
+        u16 x;
+        u16 y;
     private:
 };
 
@@ -38,10 +39,10 @@ class object {
         u8 type;
         u8 palette;
         bool hide;
-        xyPair<u8> center;
-        xyPair<u16> position;
-        xyPair<u8> speed;
-        xyPair<u8> acceleration;
+        xyPair center;
+        xyPair position;
+        xyPair speed;
+        xyPair acceleration;
         u8 height;
         u8 width;
         u8 height_sprite;

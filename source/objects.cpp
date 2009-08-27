@@ -75,14 +75,6 @@ object::~object() {
 
 }
 
-template <class T>
-xyPair<T> xyPair<T>::operator + (xyPair<T> param) {
-    xyPair<T> temp;
-    temp.x = x + param.x;
-    temp.y = y + param.y;
-    return (temp);
-}
-
 void object::updateOAM() {
     // Writes properties of the object into oam (I guess)
     oamSet(&oamMain,           //main graphics engine context
@@ -102,3 +94,15 @@ void object::updateOAM() {
            false );            //apply mosaic
 }
 
+xyPair xyPair::operator + (xyPair param) {
+    xyPair temp;
+    temp.x = x + param.x;
+    temp.y = y + param.y;
+    return (temp);
+}
+
+xyPair& xyPair::operator += (xyPair param) {
+    x += param.x;
+    y += param.y;
+    return *this;
+}

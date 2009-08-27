@@ -1,3 +1,6 @@
+#ifndef __OBJECTS_H
+#define __OBJECTS_H
+
 #include "includes_all.h"
 #include "includes_debug.h"
 
@@ -5,9 +8,14 @@
 #define TANK    1
 
 template <class T>
-struct xyPair {
-    T x;
-    T y;
+class xyPair {
+    public:
+        xyPair () {};
+        xyPair operator + (xyPair);
+
+        T x;
+        T y;
+    private:
 };
 
 class object {
@@ -60,3 +68,4 @@ inline void object::setHide(bool hide){
     this->hide = hide;
 }
 
+#endif

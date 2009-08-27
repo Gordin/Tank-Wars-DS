@@ -1,3 +1,6 @@
+#ifndef __PLAYERS_H
+#define __PLAYERS_H
+
 #include "includes_all.h"
 #include "includes_debug.h"
 #include "objects.h"
@@ -30,3 +33,4 @@ class playerset {
     private:
 };
 
+#endif

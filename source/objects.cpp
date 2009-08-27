@@ -66,13 +66,21 @@ object::object(u8 id, u8 type) {
     this->id = id;
 
 
-    position.x = 15 * id;
-    position.y = 150;
+    position.x = 20 * id;
+    position.y = 15;
     updateOAM();
 }
 
 object::~object() {
 
+}
+
+template <class T>
+xyPair<T> xyPair<T>::operator + (xyPair<T> param) {
+    xyPair<T> temp;
+    temp.x = x + param.x;
+    temp.y = y + param.y;
+    return (temp);
 }
 
 void object::updateOAM() {

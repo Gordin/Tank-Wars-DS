@@ -11,7 +11,7 @@ class physicsEngine
         physicsEngine (xyPair gravity);
         virtual ~physicsEngine();
 
-        void applyGravity(player &pl);
+        void applyGravity(object &pl);
 
         xyPair gravity;
 

@@ -128,7 +128,6 @@ int main() {
     players.all[0].acceleration.x = 0;
     players.all[0].acceleration.y = 0;
 
-
     // *** Debug start ***
     iprintf("No Fail!\n");
     // *** Debug end   ***

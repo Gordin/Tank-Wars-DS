@@ -15,7 +15,7 @@ class player: public object {
         static u8 hasTurn;
 
         u8 pid;
-        u16 angele;
+        u16 angle;
         u16 power;
         u16 men;
     private:

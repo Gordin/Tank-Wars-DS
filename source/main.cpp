@@ -122,18 +122,21 @@ int main() {
     // init physics
     xyPair bla;
     bla.x = 0;
-    bla.y = 1;
+    bla.y = 10;
     physicsEngine physics(bla);
 
     players.all[0].acceleration.x = 0;
     players.all[0].acceleration.y = 0;
+
 
     // *** Debug start ***
     iprintf("No Fail!\n");
     // *** Debug end   ***
 
     while(1) { // Main game loop
-        physics.applyGravity(players.all[0]);
+        for( u8 i = 0; i < players.playercount; i += 1) {
+            physics.applyGravity(players.all[i]);
+        }
         mountain.dropLandscape();
         swiWaitForVBlank();
         players.updateOAM();

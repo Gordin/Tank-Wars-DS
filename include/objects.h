@@ -53,16 +53,16 @@ class object {
 };
 
 inline void object::setX(u16 X) {
-    position.x = X;
+    position.x = (X << 8);
 }
 
 inline void object::setY(u16 Y) {
-    position.y = Y;
+    position.y = (Y << 8);
 }
 
 inline void object::setXY(u16 X, u16 Y) {
-    position.x = X;
-    position.y = Y;
+    setX(X);
+    setY(Y);
 }
 
 inline void object::setHide(bool hide){

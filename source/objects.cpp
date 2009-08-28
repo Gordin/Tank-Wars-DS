@@ -65,9 +65,7 @@ object::object(u8 id, u8 type) {
     }
     this->id = id;
 
-
-    position.x = 20 * id;
-    position.y = 15;
+    setXY(20 * id, 15);
     updateOAM();
 }
 
@@ -79,8 +77,8 @@ void object::updateOAM() {
     // Writes properties of the object into oam (I guess)
     oamSet(&oamMain,           //main graphics engine context
            id,                 //oam index (0 to 127)
-           position.x,         //x pixel location of the sprite
-           position.y,         //y pixel location of the sprite
+           (position.x >> 8),  //x pixel location of the sprite
+           (position.y >> 8),  //y pixel location of the sprite
            0,                  //priority, lower renders last (on top)
            0,                  //this is the palette index if multiple palettes
                                //or the alpha value if bmp sprite

@@ -14,6 +14,8 @@ class xyPair {
         xyPair operator + (xyPair);
         xyPair& operator += (xyPair);
 
+        void clear();
+
         u16 x;
         u16 y;
     private:
@@ -53,11 +55,11 @@ class object {
 };
 
 inline void object::setX(u16 X) {
-    position.x = (X << 8);
+    position.x = (X << 8); // Shift right to store as fixed point
 }
 
 inline void object::setY(u16 Y) {
-    position.y = (Y << 8);
+    position.y = (Y << 8); // Shift right to store as fixed point
 }
 
 inline void object::setXY(u16 X, u16 Y) {

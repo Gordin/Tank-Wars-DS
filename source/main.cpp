@@ -116,8 +116,10 @@ int main() {
 
     // Create 1 bomb
     object bomb(15, BOMB);
-    bomb.setXY(50, 50);
+    bomb.setXY(50, 150);
     bomb.updateOAM();
+    bomb.acceleration.x = 450;
+    bomb.acceleration.y = -450;
 
     // init physics
     xyPair bla;
@@ -136,9 +138,11 @@ int main() {
         for( u8 i = 0; i < players.playercount; i += 1) {
             physics.applyGravity(players.all[i]);
         }
-        mountain.dropLandscape();
+        physics.applyGravity(bomb);
+        //mountain.dropLandscape();
         swiWaitForVBlank();
         players.updateOAM();
+        bomb.updateOAM();
         oamUpdate(&oamMain);
         DC_FlushRange(mountain.Bitmap, BG_BITMAP_LEN);
         dmaCopy(mountain.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);

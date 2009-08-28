@@ -8,6 +8,7 @@ physicsEngine::physicsEngine(xyPair gravity) {
 
 void physicsEngine::applyGravity(object &pl) {
     pl.speed += pl.acceleration + gravity;
+    pl.acceleration.clear();
     pl.position += pl.speed;
 }
 

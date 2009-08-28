@@ -18,11 +18,13 @@ player::~player() {
 }
 
 playerset::playerset(u8 playercount) {
+    // Creates "playercount" players
     this->playercount = playercount;
     all = new player[playercount];
 }
 
 void playerset::updateOAM() {
+    // Updates OAM for all players
     for( u8 i = 0; i < playercount; i += 1) {
         all[i].updateOAM();
     }

@@ -77,6 +77,7 @@ void object::updateOAM() {
     // Writes properties of the object into oam (I guess)
     oamSet(&oamMain,           //main graphics engine context
            id,                 //oam index (0 to 127)
+           // positions shifted left to get pixel value from fixed point
            (position.x >> 8),  //x pixel location of the sprite
            (position.y >> 8),  //y pixel location of the sprite
            0,                  //priority, lower renders last (on top)
@@ -92,6 +93,7 @@ void object::updateOAM() {
            false );            //apply mosaic
 }
 
+// Makes it possible to add xyPairs directly
 xyPair xyPair::operator + (xyPair param) {
     xyPair temp;
     temp.x = x + param.x;
@@ -103,4 +105,9 @@ xyPair& xyPair::operator += (xyPair param) {
     x += param.x;
     y += param.y;
     return *this;
+}
+
+void xyPair::clear() {
+    x = 0;
+    y = 0;
 }

@@ -21,6 +21,7 @@ class player: public object {
     private:
 };
 
+// Class to put all players in one place
 class playerset {
     public:
         playerset (u8 playercount);

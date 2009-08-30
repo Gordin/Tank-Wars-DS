@@ -1,10 +1,12 @@
 #include "includes_all.h"
-#include "includes_debug.h"
+
 #include "background.h"
 #include "objects.h"
 
 //TankSpriteColor (will be replaced by constructor)
 #define TSC 255
+
+xyPair object::gravity(0,10);
 
 // Handmade tanksprite. every value has 2! Pixels (1 Pixel -> 8 Bit)
 u16 object::tanksprite[64] = {
@@ -73,6 +75,12 @@ object::~object() {
 
 }
 
+void object::applyGravity() {
+    speed += acceleration + gravity;
+    acceleration.clear();
+    position += speed;
+}
+
 void object::updateOAM() {
     // Writes properties of the object into oam (I guess)
     oamSet(&oamMain,           //main graphics engine context
@@ -93,21 +101,3 @@ void object::updateOAM() {
            false );            //apply mosaic
 }
 
-// Makes it possible to add xyPairs directly
-xyPair xyPair::operator + (xyPair param) {
-    xyPair temp;
-    temp.x = x + param.x;
-    temp.y = y + param.y;
-    return (temp);
-}
-
-xyPair& xyPair::operator += (xyPair param) {
-    x += param.x;
-    y += param.y;
-    return *this;
-}
-
-void xyPair::clear() {
-    x = 0;
-    y = 0;
-}

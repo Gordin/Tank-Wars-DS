@@ -2,24 +2,9 @@
 #define __OBJECTS_H
 
 #include "includes_all.h"
-#include "includes_debug.h"
 
 #define BOMB    0
 #define TANK    1
-
-class xyPair {
-    public:
-        xyPair () {};
-        //virtual ~xyPair();
-        xyPair operator + (xyPair);
-        xyPair& operator += (xyPair);
-
-        void clear();
-
-        u16 x;
-        u16 y;
-    private:
-};
 
 class object {
     public:
@@ -30,17 +15,17 @@ class object {
         void setY(u16 Y);
         void setXY(u16 X, u16 Y);
         void setHide(bool hide);
-
+        void applyGravity();
         void updateOAM();
 
         static u8 count;
         static u16 tanksprite[64];
         static u16 bombsprite[32];
+        static xyPair gravity;
 
         u8 id;
         u8 type;
         u8 palette;
-        bool hide;
         xyPair center;
         xyPair position;
         xyPair speed;
@@ -52,6 +37,7 @@ class object {
         u16 * gfx;
         SpriteSize spriteSize;
     private:
+        bool hide;
 };
 
 inline void object::setX(u16 X) {

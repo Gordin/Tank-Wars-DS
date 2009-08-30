@@ -2,7 +2,6 @@
 #define __BACKGROUND_H
 
 #include "includes_all.h"
-#include "includes_debug.h"
 
 #define BG_BITMAP_LEN   49152   // 256 * 192    (All pixels on screen 8Bit)
 #define BG_PAL_LEN      512     // 256 * 2      (256 colors 16Bit)

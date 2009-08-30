@@ -3,4 +3,7 @@
 
 #include <nds.h> // The lib that makes everything happen 0o
 
+#include "includes_debug.h"
+#include "xyPair.h"
+
 #endif

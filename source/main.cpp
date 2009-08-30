@@ -1,8 +1,7 @@
 #include "includes_all.h"
-#include "includes_debug.h"
 #include "background.h"
 #include "players.h"
-#include "physics.h"
+#include "bomb.h"
 
 void initVideo() {
     // This stuff is copied from pataters tutorial (because it works... 0o)
@@ -112,23 +111,12 @@ int main() {
 
     // Create 10 players
     playerset players(10);
-    //players.all[0].setHide(true);
 
     // Create 1 bomb
-    object bomb(15, BOMB);
-    bomb.setXY(50, 150);
-    bomb.updateOAM();
-    bomb.acceleration.x = 450;
-    bomb.acceleration.y = -450;
-
-    // init physics
-    xyPair bla;
-    bla.x = 0;
-    bla.y = 10;
-    physicsEngine physics(bla);
-
-    players.all[0].acceleration.x = 0;
-    players.all[0].acceleration.y = 0;
+    bomb bombs[1];
+    bombs[0].setXY(50, 100);
+    bombs[0].acceleration.x = 450;
+    bombs[0].acceleration.y = -450;
 
     // *** Debug start ***
     iprintf("No Fail!\n");
@@ -136,13 +124,13 @@ int main() {
 
     while(1) { // Main game loop
         for( u8 i = 0; i < players.playercount; i += 1) {
-            physics.applyGravity(players.all[i]);
+            players.all[i].applyGravity();
         }
-        physics.applyGravity(bomb);
+        bombs[0].applyGravity();
         //mountain.dropLandscape();
         swiWaitForVBlank();
         players.updateOAM();
-        bomb.updateOAM();
+        bombs[0].updateOAM();
         oamUpdate(&oamMain);
         DC_FlushRange(mountain.Bitmap, BG_BITMAP_LEN);
         dmaCopy(mountain.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);

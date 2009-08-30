@@ -1,5 +1,4 @@
 #include "includes_all.h"
-#include "includes_debug.h"
 #include "background.h"
 
 drawBackground::drawBackground(u16 width, u16 height) {

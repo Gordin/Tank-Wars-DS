@@ -2,7 +2,6 @@
 #define __PLAYERS_H
 
 #include "includes_all.h"
-#include "includes_debug.h"
 #include "objects.h"
 
 class player: public object {
@@ -10,6 +9,8 @@ class player: public object {
         player ();
         player (u8 pid);
         virtual ~player();
+
+        void shoot();
 
         static u8 count;
         static u8 hasTurn;

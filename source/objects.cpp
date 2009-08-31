@@ -6,7 +6,7 @@
 //TankSpriteColor (will be replaced by constructor)
 #define TSC 255
 
-xyPair object::gravity(0,10);
+Vector2D object::gravity(0,10);
 
 // Handmade tanksprite. every value has 2! Pixels (1 Pixel -> 8 Bit)
 u16 object::tanksprite[64] = {

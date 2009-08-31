@@ -6,3 +6,6 @@
 *.elf
 *.arm9
 *.nds
+.cproject
+.project
+.settings/

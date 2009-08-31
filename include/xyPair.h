@@ -1,15 +1,15 @@
-#ifndef __XYPAIR_H
-#define __XYPAIR_H
+#ifndef __VECTOR2D_H
+#define __VECTOR2D_H
 
 #include "includes_all.h"
 
-class xyPair {
+class Vector2D {
     public:
-        xyPair () {};
-        xyPair (u16 X, u16 Y);
-        //virtual ~xyPair();
-        xyPair operator + (xyPair);
-        xyPair& operator += (xyPair);
+        Vector2D () {};
+        Vector2D (u16 X, u16 Y);
+        //virtual ~Vector2D();
+        Vector2D operator + (Vector2D);
+        Vector2D& operator += (Vector2D);
 
         void clear();
 

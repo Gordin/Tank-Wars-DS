@@ -21,15 +21,15 @@ class object {
         static u8 count;
         static u16 tanksprite[64];
         static u16 bombsprite[32];
-        static xyPair gravity;
+        static Vector2D gravity;
 
         u8 id;
         u8 type;
         u8 palette;
-        xyPair center;
-        xyPair position;
-        xyPair speed;
-        xyPair acceleration;
+        Vector2D center;
+        Vector2D position;
+        Vector2D speed;
+        Vector2D acceleration;
         u8 height;
         u8 width;
         u8 height_sprite;

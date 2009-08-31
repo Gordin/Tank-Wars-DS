@@ -1,25 +1,25 @@
-#include "xyPair.h"
+#include "vector2D.h"
 
-xyPair::xyPair(u16 X, u16 Y) {
+Vector2D::Vector2D(u16 X, u16 Y) {
     x = X;
     y = Y;
 }
 
 // Makes it possible to add xyPairs directly
-xyPair xyPair::operator + (xyPair param) {
-    xyPair temp;
+Vector2D Vector2D::operator + (Vector2D param) {
+    Vector2D temp;
     temp.x = x + param.x;
     temp.y = y + param.y;
     return (temp);
 }
 
-xyPair& xyPair::operator += (xyPair param) {
+Vector2D& Vector2D::operator += (Vector2D param) {
     x += param.x;
     y += param.y;
     return *this;
 }
 
-void xyPair::clear() {
+void Vector2D::clear() {
     x = 0;
     y = 0;
 }

@@ -19,8 +19,6 @@ class object {
         void updateOAM();
 
         static u8 count;
-        static u16 tanksprite[64];
-        static u16 bombsprite[32];
         static Vector2D gravity;
 
         u8 id;

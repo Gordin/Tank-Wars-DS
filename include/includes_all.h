@@ -3,6 +3,7 @@
 
 #include <nds.h> // The lib that makes everything happen 0o
 
+#include "colors.h"
 #include "includes_debug.h"
 #include "vector2D.h"
 

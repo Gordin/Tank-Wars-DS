@@ -12,12 +12,14 @@ class bomb: public object {
         bomb (u8 bombtype);
         virtual ~bomb();
 
+        static u16 sprite[32];
         static u8 count;
         static u8 count_offset;
 
         u8 power;
         u8 bombtype;
     private:
+        void setsprite();
 };
 
 #endif

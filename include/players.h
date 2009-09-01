@@ -12,6 +12,7 @@ class player: public object {
 
         void shoot();
 
+        static u16 sprite[64];
         static u8 count;
         static u8 hasTurn;
 
@@ -20,6 +21,7 @@ class player: public object {
         u16 power;
         u16 men;
     private:
+        void setSprite();
 };
 
 // Class to put all players in one place

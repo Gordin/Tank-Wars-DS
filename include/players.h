@@ -11,6 +11,7 @@ class player: public object {
         virtual ~player();
 
         void shoot();
+        void checkSides();
 
         static u16 sprite[64];
         static u8 count;

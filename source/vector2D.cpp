@@ -1,6 +1,6 @@
 #include "vector2D.h"
 
-Vector2D::Vector2D(u16 X, u16 Y) {
+Vector2D::Vector2D(s32 X, s32 Y) {
     x = X;
     y = Y;
 }

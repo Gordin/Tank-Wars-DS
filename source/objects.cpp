@@ -22,6 +22,7 @@ void object::applyGravity() {
     speed += acceleration + gravity;
     acceleration.clear();
     position += speed;
+    checkSides();
 }
 
 void object::updateOAM() {

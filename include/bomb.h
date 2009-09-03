@@ -12,6 +12,8 @@ class bomb: public object {
         bomb (u8 bombtype);
         virtual ~bomb();
 
+        void checkSides();
+
         static u16 sprite[32];
         static u8 count;
         static u8 count_offset;

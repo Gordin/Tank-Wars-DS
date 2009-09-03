@@ -41,6 +41,20 @@ void player::setSprite() {
             this->gfx[i] = id | id << 8;
         }
     }
+    center.x = 5;
+    center.y = 5;
+    height = 5;
+    width = 9;
+}
+
+void player::checkSides() {
+    s16 Y = getY() + height;
+    u8 sheight = SCREEN_HEIGHT - 1;
+    // Checks bottom side
+    if(Y >= sheight) {
+        speed.y = 0;
+        setY(sheight - height + 1);
+    }
 }
 
 player::player(): object(count + 1, TANK) {

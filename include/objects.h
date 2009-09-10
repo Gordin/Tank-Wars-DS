@@ -32,6 +32,7 @@ class object {
         Vector2D position;
         Vector2D speed;
         Vector2D acceleration;
+        Vector2D radius;
         u8 height;
         u8 width;
         u8 height_sprite;
@@ -43,19 +44,19 @@ class object {
 };
 
 inline void object::setX(u16 X) {
-    position.x = (X << 8); // Shift left to store as fixed point
+    position.x = ((X + radius.x) << 8); // Shift left to store as fixed point
 }
 
 inline void object::setY(u16 Y) {
-    position.y = (Y << 8); // Shift left to store as fixed point
+    position.y = ((Y - radius.y) << 8); // Shift left to store as fixed point
 }
 
 inline u16 object::getX() {
-    return position.x >> 8; // Shift right because it's fixed point
+    return (position.x >> 8) - radius.x; // Shift right because it's fixed point
 }
 
 inline u16 object::getY() {
-    return position.y >> 8; // Shift right because it's fixed point
+    return (position.y >> 8) + radius.y; // Shift right because it's fixed point
 }
 
 inline void object::setXY(u16 X, u16 Y) {

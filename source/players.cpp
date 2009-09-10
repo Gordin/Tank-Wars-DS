@@ -44,16 +44,18 @@ void player::setSprite() {
     center.x = 5;
     center.y = 5;
     height = 5;
+    radius.x = 4;
     width = 9;
+    radius.y = 4;
 }
 
 void player::checkSides() {
-    s16 Y = getY() + height;
+    s16 Y = getY();
     u8 sheight = SCREEN_HEIGHT - 1;
     // Checks bottom side
     if(Y >= sheight) {
         speed.y = 0;
-        setY(sheight - height + 1);
+        setY(sheight);
     }
 }
 

@@ -31,19 +31,19 @@ void bomb::checkSides() {
     s16 X = getX();
     u8 swidth = SCREEN_WIDTH - 1;
     // Checks left and right side
-    if(X >= swidth) {
+    if((X + radius.x) >= swidth) {
         speed.x = -speed.x;
-        setX(swidth);
-    } else if(X <= 0) {
+        setX(swidth - radius.x);
+    } else if((X - radius.x) <= 0) {
         speed.x = -speed.x;
-        setX(0);
+        setX(0 + radius.x);
     }
     s16 Y = getY();
     u8 sheight = SCREEN_HEIGHT - 1;
     // Checks bottom side
-    if(Y >= sheight) {
+    if((Y + radius.y) >= sheight) {
         speed.y = -speed.y;
-        setY(sheight);
+        setY(sheight - radius.y);
     }
 }
 
@@ -56,6 +56,8 @@ void bomb::setsprite() {
     center.x = 1;
     center.y = 1;
     height = 3;
+    radius.x = 1;
     width = 3;
+    radius.y = 1;
 }
 

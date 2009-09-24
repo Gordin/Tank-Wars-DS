@@ -21,9 +21,11 @@ class object {
         void applyGravity();
         void updateOAM();
         virtual void checkSides() {}
+        virtual void checkGround() {}
 
         static u8 count;
         static Vector2D gravity;
+        static landscape land1;
 
         u8 id;
         u8 type;
@@ -44,7 +46,7 @@ class object {
 };
 
 inline void object::setX(u16 X) {
-    position.x = ((X + radius.x) << 8); // Shift left to store as fixed point
+    position.x = ((X - radius.x) << 8); // Shift left to store as fixed point
 }
 
 inline void object::setY(u16 Y) {
@@ -52,7 +54,7 @@ inline void object::setY(u16 Y) {
 }
 
 inline u16 object::getX() {
-    return (position.x >> 8) - radius.x; // Shift right because it's fixed point
+    return (position.x >> 8) + radius.x; // Shift right because it's fixed point
 }
 
 inline u16 object::getY() {

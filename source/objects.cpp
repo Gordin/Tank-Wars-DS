@@ -4,6 +4,7 @@
 #include "objects.h"
 
 Vector2D object::gravity(0,10);
+landscape object::land1;
 
 
 object::object(u8 id, u8 type) {
@@ -21,8 +22,13 @@ object::~object() {
 void object::applyGravity() {
     speed += acceleration + gravity;
     acceleration.clear();
-    position += speed;
-    checkSides();
+    for( u8 i = 0; i < (1 << 3); i += 1)
+    {
+        checkGround();
+        checkSides();
+        position += (speed / 8);
+    }
+    //position += speed;
 }
 
 void object::updateOAM() {

@@ -47,6 +47,16 @@ void bomb::checkSides() {
     }
 }
 
+void bomb::checkGround() {
+    s16 X = getX();
+    s16 Y = getY();
+    if(object::land1.getPixColorI(X,Y) == DIRT)
+    {
+        speed.x = -speed.x;
+        speed.y = -speed.y;
+    }
+}
+
 void bomb::setsprite() {
     spriteSize = SpriteSize_8x8;
     // oamAllocateGfx allocates memory for the object-sprite

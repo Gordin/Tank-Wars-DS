@@ -13,6 +13,7 @@ class bomb: public object {
         virtual ~bomb();
 
         void checkSides();
+        void checkGround();
 
         static u16 sprite[32];
         static u8 count;

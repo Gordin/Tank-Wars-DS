@@ -9,7 +9,11 @@ class Vector2D {
         Vector2D (s32 X, s32 Y);
         //virtual ~Vector2D();
         Vector2D operator + (Vector2D);
+        Vector2D operator - (Vector2D);
+        Vector2D operator / (int);
         Vector2D& operator += (Vector2D);
+        Vector2D operator >> (int);
+        Vector2D operator << (int);
 
         void clear();
 

@@ -12,6 +12,7 @@ class player: public object {
 
         void shoot();
         void checkSides();
+        void checkGround();
 
         static u16 sprite[64];
         static u8 count;

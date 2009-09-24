@@ -102,12 +102,12 @@ int main() {
     initBackgrounds(); // Configure the background control register
 
     landscape mountain; // Sets up (empty) landscap-background
-    initLandscape(mountain); // Put stuff in the landscape
+    initLandscape(object::land1); // Put stuff in the landscape
 
     // Sets up background preferences and stores background id in bg2
     int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
-    initObjects(mountain); // Sets stuff so objects will works
+    initObjects(object::land1); // Sets stuff so objects will works
 
     // Create 10 players
     playerset players(10);
@@ -122,18 +122,23 @@ int main() {
     iprintf("No Fail!\n");
     // *** Debug end   ***
 
+    //u8 foo = players.all[0].getY();
+    //u8 bar = players.all[0].getX();
     while(1) { // Main game loop
         for( u8 i = 0; i < players.playercount; i += 1) {
             players.all[i].applyGravity();
         }
+        //printf("%i, %i, %i\n", foo, players.all[0].getY(),
+                //object::land1.groundheight[bar]);
         bombs[0].applyGravity();
         //mountain.dropLandscape();
         swiWaitForVBlank();
         players.updateOAM();
         bombs[0].updateOAM();
         oamUpdate(&oamMain);
-        DC_FlushRange(mountain.Bitmap, BG_BITMAP_LEN);
-        dmaCopy(mountain.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
+        //DC_FlushAll();
+        DC_FlushRange(object::land1.Bitmap, BG_BITMAP_LEN);
+        dmaCopy(object::land1.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
     }
     return 0;
 }

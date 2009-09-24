@@ -59,6 +59,16 @@ void player::checkSides() {
     }
 }
 
+void player::checkGround() {
+    s16 X = getX();
+    s16 Y = getY();
+    if(object::land1.getPixColorI(X,Y+1) == DIRT)
+    {
+        speed.x = 0;
+        speed.y = 0;
+    }
+}
+
 player::player(): object(count + 1, TANK) {
     count++;
     pid = count;

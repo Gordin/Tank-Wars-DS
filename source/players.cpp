@@ -62,11 +62,31 @@ void player::checkSides() {
 void player::checkGround() {
     s16 X = getX();
     s16 Y = getY();
-    if(object::land1.getPixColorI(X,Y+1) == DIRT)
-    {
+    initialFall();
+    if(object::land1.getPixColorI(X,Y+1) == DIRT) {
         speed.x = 0;
         speed.y = 0;
     }
+}
+
+void player::initialFall() {
+    /* Removes Landscape under the tank until theres
+     * no free space between tank and landscape
+     */
+    s16 X = getX();
+    s16 Y = getY();
+    u8 pushDirt = 0;
+    for( u8 i = 0; i < 9; i += 1) {
+        if(object::land1.getPixColorI((X-4)+i,Y+1) == DIRT) {
+            pushDirt++;
+        }
+    }
+    if(pushDirt < 9) {
+        for( u8 i = 0; i < 9; i += 1) {
+            land1.setPixColorI((X-4)+i, Y+1, object::land1.backgroundColorI);
+        }
+    }
+
 }
 
 player::player(): object(count + 1, TANK) {

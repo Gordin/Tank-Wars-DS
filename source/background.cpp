@@ -47,7 +47,7 @@ landscape::~landscape() {
 }
 
 void landscape::redrawColumn(u16 column) {
-    //TODO Change calor and backgroundColor back (test for landscape dropping)
+    //TODO Change color and backgroundColor back (test for landscape dropping)
     for(u16 i = 0; i < (height - groundheight[column] + 1); i++) {
         setPixColorI(column, i, backgroundColorI);
     }

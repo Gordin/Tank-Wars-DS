@@ -86,7 +86,6 @@ void player::initialFall() {
             land1.setPixColorI((X-4)+i, Y+1, object::land1.backgroundColorI);
         }
     }
-
 }
 
 player::player(): object(count + 1, TANK) {

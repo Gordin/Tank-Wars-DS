@@ -47,6 +47,7 @@ void player::setSprite() {
     radius.x = 4;
     width = 9;
     radius.y = 4;
+    setXY(20 * id, 15);
 }
 
 void player::checkSides() {

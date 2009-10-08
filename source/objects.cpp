@@ -11,7 +11,6 @@ object::object(u8 id, u8 type) {
     this->type = type;
     this->id = id;
 
-    setXY(20 * id, 15);
     updateOAM();
 }
 

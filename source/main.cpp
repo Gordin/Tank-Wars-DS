@@ -109,36 +109,37 @@ int main() {
 
     initObjects(object::land1); // Sets stuff so objects will works
 
-    // Create 10 players
-    playerset players(10);
 
     // Create 1 bomb
     bomb bombs[1];
-    bombs[0].setXY(50, 100);
-    bombs[0].acceleration.x = 450;
-    bombs[0].acceleration.y = -450;
+    //bombs[0].setXY(50, 100);
+    //bombs[0].acceleration.x = 450;
+    //bombs[0].acceleration.y = -450;
+
+    // Create 10 players
+    playerset players(10);
 
     // *** Debug start ***
     iprintf("No Fail!\n");
     // *** Debug end   ***
 
-    //u8 foo = players.all[0].getY();
-    //u8 bar = players.all[0].getX();
     while(1) { // Main game loop
         for( u8 i = 0; i < players.playercount; i += 1) {
             players.all[i].applyGravity();
+            //iprintf("%i\n",i);
         }
-        //printf("%i, %i, %i\n", foo, players.all[0].getY(),
-                //object::land1.groundheight[bar]);
         bombs[0].applyGravity();
         //mountain.dropLandscape();
         swiWaitForVBlank();
+        DC_FlushAll();
         players.updateOAM();
+        oamUpdate(&oamMain);
         bombs[0].updateOAM();
         oamUpdate(&oamMain);
-        //DC_FlushAll();
         DC_FlushRange(object::land1.Bitmap, BG_BITMAP_LEN);
         dmaCopy(object::land1.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
+        //iprintf("%i\n", bombs[0].id);
+        //iprintf("%i", bombs[0].getX());
     }
     return 0;
 }

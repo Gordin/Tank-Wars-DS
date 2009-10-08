@@ -15,13 +15,13 @@ u16 bomb::sprite[32] = {
 bomb::bomb(u8 bombtype): object(count + count_offset + 1, BOMB) {
     count++;
     this->bombtype = bombtype;
-    setsprite();
+    setSprite();
 }
 
-bomb::bomb(): object(count + count_offset + 1, BOMB) {
-    count++;
+bomb::bomb(): object(++count + count_offset , BOMB) {
+    //TODO Change other contructors the same way...
     this->bombtype = STANDARD_BOMB;
-    setsprite();
+    setSprite();
 }
 
 bomb::~bomb() {
@@ -36,7 +36,7 @@ void bomb::checkSides() {
         setX(swidth - radius.x);
     } else if((X - radius.x) <= 0) {
         speed.x = -speed.x;
-        setX(0 + radius.x);
+        setX(radius.x);
     }
     s16 Y = getY();
     u8 sheight = SCREEN_HEIGHT - 1;
@@ -57,7 +57,10 @@ void bomb::checkGround() {
     }
 }
 
-void bomb::setsprite() {
+void bomb::setSprite() {
+    //for (u8 i = 0; i < 64; i++) {
+      //sprite[i] = WHITE | WHITE << 8;
+    //}
     spriteSize = SpriteSize_8x8;
     // oamAllocateGfx allocates memory for the object-sprite
     gfx = oamAllocateGfx(&oamMain, spriteSize, SpriteColorFormat_256Color);
@@ -69,5 +72,6 @@ void bomb::setsprite() {
     radius.x = 1;
     width = 3;
     radius.y = 1;
+    setXY(20 * id, 15);
 }
 

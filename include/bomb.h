@@ -22,7 +22,7 @@ class bomb: public object {
         u8 power;
         u8 bombtype;
     private:
-        void setsprite();
+        void setSprite();
 };
 
 #endif

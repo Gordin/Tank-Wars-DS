@@ -47,7 +47,7 @@ void player::setSprite() {
     radius.x = 4;
     width = 9;
     radius.y = 4;
-    setXY(20 * id, 15);
+    setXY(20 * (id + 1), 15);
 }
 
 void player::checkSides() {
@@ -78,13 +78,13 @@ void player::initialFall() {
     s16 Y = getY();
     u8 pushDirt = 0;
     for( u8 i = 0; i < 9; i += 1) {
-        if(object::land1.getPixColorI((X-4)+i,Y+1) == DIRT) {
+        if(object::land1.getPixColorI((X-radius.x)+i,Y+1) == DIRT) {
             pushDirt++;
         }
     }
     if(pushDirt < 9) {
         for( u8 i = 0; i < 9; i += 1) {
-            land1.setPixColorI((X-4)+i, Y+1, object::land1.backgroundColorI);
+            land1.setPixColorI((X-radius.x)+i, Y+1, object::land1.backgroundColorI);
         }
     }
 }

@@ -12,14 +12,12 @@ u16 bomb::sprite[32] = {
             WHITE << 8
 };
 
-bomb::bomb(u8 bombtype): object(count + count_offset + 1, BOMB) {
-    count++;
+bomb::bomb(u8 bombtype): object(count++ + count_offset, BOMB) {
     this->bombtype = bombtype;
     setSprite();
 }
 
-bomb::bomb(): object(count++ + count_offset , BOMB) {
-    //TODO Change other contructors the same way...
+bomb::bomb(): object(count++ + count_offset, BOMB) {
     this->bombtype = STANDARD_BOMB;
     setSprite();
 }
@@ -58,9 +56,6 @@ void bomb::checkGround() {
 }
 
 void bomb::setSprite() {
-    //for (u8 i = 0; i < 64; i++) {
-      //sprite[i] = WHITE | WHITE << 8;
-    //}
     spriteSize = SpriteSize_8x8;
     // oamAllocateGfx allocates memory for the object-sprite
     gfx = oamAllocateGfx(&oamMain, spriteSize, SpriteColorFormat_256Color);

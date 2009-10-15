@@ -14,8 +14,8 @@ object::object(u8 id, u8 type) {
     this->acceleration.y = 0;
     this->speed.x = 0;
     this->speed.y = 0;
+    this->hide = false;
 
-    iprintf("%i\n", id);
     updateOAM();
 }
 
@@ -32,7 +32,6 @@ void object::applyGravity() {
         checkSides();
         position += (speed / 8);
     }
-    //position += speed;
 }
 
 void object::updateOAM() {

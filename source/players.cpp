@@ -34,11 +34,11 @@ void player::setSprite() {
     // This loop replaces the object-color with the player-color
     for(u16 i = 0; i < sizeof(sprite) / 2; i++) {
         if(sprite[i] == TSC) {
-            this->gfx[i] = id;
+            this->gfx[i] = (id + 1);
         } else if(sprite[i] == (TSC << 8)) {
-            this->gfx[i] = id << 8;
+            this->gfx[i] = (id + 1) << 8;
         } else if(sprite[i] == (TSC | TSC << 8)) {
-            this->gfx[i] = id | id << 8;
+            this->gfx[i] = (id + 1) | (id + 1) << 8;
         }
     }
     center.x = 5;
@@ -89,33 +89,15 @@ void player::initialFall() {
     }
 }
 
-player::player(): object(count + 1, TANK) {
-    count++;
+player::player(): object(count++, TANK) {
     pid = count;
     setSprite();
 }
 
-player::player(u8 pid): object(pid, TANK) {
-    count++;
+player::player(u8 pid): object(count++, TANK) {
     this->pid = pid;
     setSprite();
 }
 
 player::~player() {
-}
-
-playerset::playerset(u8 playercount) {
-    // Creates "playercount" players
-    this->playercount = playercount;
-    all = new player[playercount];
-}
-
-void playerset::updateOAM() {
-    // Updates OAM for all players
-    for( u8 i = 0; i < playercount; i += 1) {
-        all[i].updateOAM();
-    }
-}
-
-playerset::~playerset() {
 }

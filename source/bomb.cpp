@@ -18,7 +18,7 @@ bomb::bomb(u8 bombtype): object(count + count_offset + 1, BOMB) {
     setSprite();
 }
 
-bomb::bomb(): object(++count + count_offset , BOMB) {
+bomb::bomb(): object(count++ + count_offset , BOMB) {
     //TODO Change other contructors the same way...
     this->bombtype = STANDARD_BOMB;
     setSprite();

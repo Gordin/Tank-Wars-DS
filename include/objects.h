@@ -23,7 +23,7 @@ class object {
         virtual void checkSides() {}
         virtual void checkGround() {}
 
-        static u8 count;
+        //static u8 count;
         static Vector2D gravity;
         static landscape land1;
 

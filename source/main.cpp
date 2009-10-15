@@ -112,34 +112,47 @@ int main() {
 
     // Create 1 bomb
     bomb bombs[1];
-    //bombs[0].setXY(50, 100);
+    bombs[0].setXY(50, 100);
     //bombs[0].acceleration.x = 450;
-    //bombs[0].acceleration.y = -450;
+    bombs[0].acceleration.x = 0;
+    bombs[0].acceleration.y = -450;
+    iprintf("%i,%i\n",bombs[0].acceleration.x, bombs[0].acceleration.y);
+    iprintf("%i,%i\n",bombs[0].speed.x, bombs[0].speed.y);
 
     // Create 10 players
-    playerset players(10);
+    player players[1];
 
     // *** Debug start ***
     iprintf("No Fail!\n");
     // *** Debug end   ***
 
     while(1) { // Main game loop
-        for( u8 i = 0; i < players.playercount; i += 1) {
-            players.all[i].applyGravity();
-            //iprintf("%i\n",i);
-        }
+        //for( u8 i = 0; i < players.playercount; i += 1) {
+            //players.all[i].applyGravity();
+        //}
+        players[0].applyGravity();
         bombs[0].applyGravity();
         //mountain.dropLandscape();
         swiWaitForVBlank();
-        DC_FlushAll();
-        players.updateOAM();
-        oamUpdate(&oamMain);
+        players[0].updateOAM();
         bombs[0].updateOAM();
         oamUpdate(&oamMain);
         DC_FlushRange(object::land1.Bitmap, BG_BITMAP_LEN);
         dmaCopy(object::land1.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
         //iprintf("%i\n", bombs[0].id);
-        //iprintf("%i", bombs[0].getX());
+        //iprintf("\n", players.all[0].getY());
+        //iprintf("%i\n", players.all[0].getY());
+        //iprintf("%i\n", players.all[1].getY());
+        //iprintf("%i\n", players.all[2].getY());
+        //iprintf("%i\n", players.all[3].getY());
+        //iprintf("%i\n", players.all[4].getY());
+        //iprintf("%i\n", players.all[5].getY());
+        //iprintf("%i\n", players.all[6].getY());
+        //iprintf("%i\n", players.all[7].getY());
+        //iprintf("%i\n", players.all[8].getY());
+        //iprintf("%i\n", players.all[9].getY());
+        //iprintf("%i\n", bombs[0].getY());
+        iprintf("%i,%i\n",bombs[0].getY(), bombs[0].speed.y);
     }
     return 0;
 }

@@ -10,7 +10,12 @@ landscape object::land1;
 object::object(u8 id, u8 type) {
     this->type = type;
     this->id = id;
+    this->acceleration.x = 0;
+    this->acceleration.y = 0;
+    this->speed.x = 0;
+    this->speed.y = 0;
 
+    iprintf("%i\n", id);
     updateOAM();
 }
 

@@ -27,17 +27,4 @@ class player: public object {
         void setSprite();
 };
 
-// Class to put all players in one place
-class playerset {
-    public:
-        playerset (u8 playercount);
-        virtual ~playerset();
-
-        void updateOAM();
-
-        u8 playercount;
-        player * all;
-    private:
-};
-
 #endif

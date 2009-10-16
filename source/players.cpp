@@ -50,6 +50,7 @@ void player::setSprite() {
     width = TANK_WIDTH;
     radius.x = TANK_RADIUS_X;
     radius.y = TANK_RADIUS_Y;
+    //XXX places the tank on the screen
     setXY(20 * (id + 1), 15);
 }
 
@@ -68,7 +69,7 @@ void player::checkGround() {
     s16 Y = getY();
     initialFall();
     // Collision Detection Player <-> Landscape
-    if(object::land1.getPixColorI(X,Y+1) == DIRT) {
+    if(object::land1.getPixColorI(X,Y+1) == land1.colorI) {
         speed.x = 0;
         speed.y = 0;
     }
@@ -81,13 +82,17 @@ void player::initialFall() {
     s16 X = getX();
     s16 Y = getY();
     u8 pushDirt = 0;
-    for(u8 i = 0; i < 9; i += 1) {
-        if(object::land1.getPixColorI((X-radius.x)+i,Y+1) == DIRT) {
+    // Checks if tank is standing on the landscape
+    for(u8 i = 0; i < width; i += 1) {
+        if(object::land1.getPixColorI((X-radius.x)+i,Y+1) == land1.colorI) {
             pushDirt++;
         }
     }
-    if(pushDirt < 9) {
-        for(u8 i = 0; i < 9; i += 1) {
+    /* If the tank is not standing completely on the landscape, remove dirt
+     * inside the tank
+     */
+    if(pushDirt < width) {
+        for(u8 i = 0; i < width; i += 1) {
             land1.setPixColorI((X-radius.x)+i, Y+1, object::land1.backgroundColorI);
         }
     }

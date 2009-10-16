@@ -49,7 +49,7 @@ void bomb::checkGround() {
     s16 X = getX();
     s16 Y = getY();
     // Collision Detection Bomb <-> Landscape
-    if(object::land1.getPixColorI(X,Y) == DIRT) {
+    if(object::land1.getPixColorI(X,Y) == land1.colorI) {
         speed.x = -speed.x;
         speed.y = -speed.y;
     }
@@ -67,6 +67,7 @@ void bomb::setSprite() {
     width = BOMB_WIDTH;
     radius.x = BOMB_RADIUS_X;
     radius.y = BOMB_RADIUS_Y;
+    //XXX places the bomb on the screen
     setXY(20 * (id + 1), 15);
 }
 

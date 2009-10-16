@@ -48,8 +48,8 @@ void bomb::checkSides() {
 void bomb::checkGround() {
     s16 X = getX();
     s16 Y = getY();
-    if(object::land1.getPixColorI(X,Y) == DIRT)
-    {
+    // Collision Detection Bomb <-> Landscape
+    if(object::land1.getPixColorI(X,Y) == DIRT) {
         speed.x = -speed.x;
         speed.y = -speed.y;
     }
@@ -61,12 +61,12 @@ void bomb::setSprite() {
     gfx = oamAllocateGfx(&oamMain, spriteSize, SpriteColorFormat_256Color);
     // This copies the sprite into the object
     memcpy(this->gfx, sprite, sizeof(sprite));
-    center.x = 1;
-    center.y = 1;
-    height = 3;
-    radius.x = 1;
-    width = 3;
-    radius.y = 1;
-    setXY(20 * id, 15);
+    center.x = BOMB_CENTER_X;
+    center.y = BOMB_CENTER_Y;
+    height = BOMB_HEIGHT;
+    width = BOMB_WIDTH;
+    radius.x = BOMB_RADIUS_X;
+    radius.y = BOMB_RADIUS_Y;
+    setXY(20 * (id + 1), 15);
 }
 

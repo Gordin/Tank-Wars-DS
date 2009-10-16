@@ -34,19 +34,22 @@ void player::setSprite() {
     // This loop replaces the object-color with the player-color
     for(u16 i = 0; i < sizeof(sprite) / 2; i++) {
         if(sprite[i] == TSC) {
+            // Only Left pixel
             this->gfx[i] = (id + 1);
         } else if(sprite[i] == (TSC << 8)) {
+            // Only right pixel
             this->gfx[i] = (id + 1) << 8;
         } else if(sprite[i] == (TSC | TSC << 8)) {
+            // Both pixels
             this->gfx[i] = (id + 1) | (id + 1) << 8;
         }
     }
-    center.x = 5;
-    center.y = 5;
-    height = 5;
-    radius.x = 4;
-    width = 9;
-    radius.y = 4;
+    center.x = TANK_CENTER_X;
+    center.y = TANK_CENTER_Y;
+    height = TANK_HEIGHT;
+    width = TANK_WIDTH;
+    radius.x = TANK_RADIUS_X;
+    radius.y = TANK_RADIUS_Y;
     setXY(20 * (id + 1), 15);
 }
 
@@ -64,6 +67,7 @@ void player::checkGround() {
     s16 X = getX();
     s16 Y = getY();
     initialFall();
+    // Collision Detection Player <-> Landscape
     if(object::land1.getPixColorI(X,Y+1) == DIRT) {
         speed.x = 0;
         speed.y = 0;
@@ -77,13 +81,13 @@ void player::initialFall() {
     s16 X = getX();
     s16 Y = getY();
     u8 pushDirt = 0;
-    for( u8 i = 0; i < 9; i += 1) {
+    for(u8 i = 0; i < 9; i += 1) {
         if(object::land1.getPixColorI((X-radius.x)+i,Y+1) == DIRT) {
             pushDirt++;
         }
     }
     if(pushDirt < 9) {
-        for( u8 i = 0; i < 9; i += 1) {
+        for(u8 i = 0; i < 9; i += 1) {
             land1.setPixColorI((X-radius.x)+i, Y+1, object::land1.backgroundColorI);
         }
     }

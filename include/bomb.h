@@ -4,7 +4,13 @@
 #include "includes_all.h"
 #include "objects.h"
 
-#define STANDARD_BOMB 0
+#define STANDARD_BOMB   0
+#define BOMB_CENTER_X   1
+#define BOMB_CENTER_Y   1
+#define BOMB_HEIGHT     3
+#define BOMB_WIDTH      3
+#define BOMB_RADIUS_X   1
+#define BOMB_RADIUS_Y   1
 
 class bomb: public object {
     public:

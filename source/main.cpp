@@ -131,7 +131,7 @@ int main() {
         bombs[0].applyGravity();
         //mountain.dropLandscape();
         swiWaitForVBlank(); // Wait for a good time to put stuff in OAM
-        // Put stuff in OAM 0o
+        // Put objects in OAM
         for(u8 i = 0; i < players_count; i += 1) {
             players[i].updateOAM();
         }

@@ -4,6 +4,13 @@
 #include "includes_all.h"
 #include "objects.h"
 
+#define TANK_CENTER_X   5
+#define TANK_CENTER_Y   5
+#define TANK_HEIGHT     5
+#define TANK_WIDTH      9
+#define TANK_RADIUS_X   4
+#define TANK_RADIUS_Y   4
+
 class player: public object {
     public:
         player ();

@@ -57,7 +57,6 @@ void gamestate::videoInit() {
     consoleDemoInit(); // Need this for debug-output (iprintf)
 }
 
-
 void gamestate::initLandscape() {
     // Sets up the palette
     landscape1.Palette[BLACK]      =   BLACK_15BIT;
@@ -82,4 +81,15 @@ void gamestate::initLandscape() {
     landscape1.fill(landscape1.backgroundColorI); // makes all pixels of the background blue
     landscape1.initCosLandscape(); //Calculates heights for a Landscape
     landscape1.fillLandscape(); // Sets the landscape based on heights
+}
+
+void gamestate::initObjects() {
+    /* We just copy over the background palette for sprites, because
+     * We don't really need that much different colors...
+     */
+    for( u16 i = 0; i < BG_PAL_LEN / 2; i++) {
+        SPRITE_PALETTE[i] = landscape1.Palette[i];
+    }
+    // This tells the DS how the sprite data is formatted
+    oamInit(&oamMain, SpriteMapping_1D_32, false);
 }

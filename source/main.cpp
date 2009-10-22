@@ -4,17 +4,6 @@
 #include "players.h"
 #include "bomb.h"
 
-void initObjects(landscape &lnd) {
-    /* We just copy over the background palette for sprites, because
-     * We don't really need that much different colors...
-     */
-    for( u16 i = 0; i < BG_PAL_LEN / 2; i++) {
-        SPRITE_PALETTE[i] = lnd.Palette[i];
-    }
-    // This tells the DS how the sprite data is formatted
-    oamInit(&oamMain, SpriteMapping_1D_32, false);
-}
-
 void updateInput(touchPosition * touch) {
     // Update the key registerts with current values.
     scanKeys();
@@ -39,7 +28,7 @@ int main() {
     // Sets up background preferences and stores background id in bg2
     int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
-    initObjects(LANDSCAPE1); // Sets stuff so objects will work
+    game->initObjects(); // Sets stuff so objects will work
 
     // Create 10 players
     u8 players_count = 10;

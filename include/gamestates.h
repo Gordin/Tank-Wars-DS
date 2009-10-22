@@ -18,6 +18,7 @@ class gamestate {
         void loop();
         void videoInit();
         void initLandscape();
+        void initObjects();
 
         static u8 state;
 

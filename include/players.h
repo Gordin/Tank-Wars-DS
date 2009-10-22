@@ -2,6 +2,7 @@
 #define __PLAYERS_H
 
 #include "includes_all.h"
+#include "gamestates.h"
 #include "objects.h"
 
 #define TANK_CENTER_X   5

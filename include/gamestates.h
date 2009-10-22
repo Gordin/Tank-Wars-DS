@@ -1,6 +1,8 @@
 #ifndef __GAMESTATES_H
 #define __GAMESTATES_H
 
+#include "background.h"
+
 #define INIT            0
 #define MENU            1
 #define BATTLE_INIT     2
@@ -15,8 +17,12 @@ class gamestate {
 
         void loop();
         void videoInit();
+        void initLandscape();
 
         static u8 state;
+
+        landscape landscape1;
+        landscape landscape2;
 
         u8 id;
     private:

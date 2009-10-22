@@ -69,7 +69,7 @@ void player::checkGround() {
     s16 Y = getY();
     initialFall();
     // Collision Detection Player <-> Landscape
-    if(object::land1.getPixColorI(X,Y+1) == land1.colorI) {
+    if(LANDSCAPE1.getPixColorI(X,Y+1) == LANDSCAPE1.colorI) {
         speed.x = 0;
         speed.y = 0;
     }
@@ -84,7 +84,7 @@ void player::initialFall() {
     u8 pushDirt = 0;
     // Checks if tank is standing on the landscape
     for(u8 i = 0; i < width; i += 1) {
-        if(object::land1.getPixColorI((X-radius.x)+i,Y+1) == land1.colorI) {
+        if(LANDSCAPE1.getPixColorI((X-radius.x)+i,Y+1) == LANDSCAPE1.colorI) {
             pushDirt++;
         }
     }
@@ -93,7 +93,7 @@ void player::initialFall() {
      */
     if(pushDirt < width) {
         for(u8 i = 0; i < width; i += 1) {
-            land1.setPixColorI((X-radius.x)+i, Y+1, object::land1.backgroundColorI);
+            LANDSCAPE1.setPixColorI((X-radius.x)+i, Y+1, object::LANDSCAPE1.backgroundColorI);
         }
     }
 }

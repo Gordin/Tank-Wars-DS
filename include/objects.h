@@ -2,6 +2,7 @@
 #define __OBJECTS_H
 
 #include "includes_all.h"
+#include "gamestates.h"
 #include "background.h"
 
 #define BOMB    0
@@ -25,7 +26,7 @@ class object {
 
         //static u8 count;
         static Vector2D gravity;
-        static landscape land1;
+        static gamestate* game;
 
         u8 id;
         u8 type;

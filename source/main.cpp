@@ -4,36 +4,6 @@
 #include "players.h"
 #include "bomb.h"
 
-void initBackgrounds() {
-    consoleDemoInit(); // Need this for debug-output (iprintf)
-}
-
-void initLandscape(landscape &lnd) {
-    // Sets up the palette
-    lnd.Palette[BLACK]      =   BLACK_15BIT;
-    lnd.Palette[RED]        =   RED_15BIT;
-    lnd.Palette[GREEN]      =   GREEN_15BIT;
-    lnd.Palette[BLUE]       =   BLUE_15BIT;
-    lnd.Palette[YELLOW]     =   YELLOW_15BIT;
-    lnd.Palette[TURQUIS]    =   TURQUIS_15BIT;
-    lnd.Palette[PURPLE]     =   PURPLE_15BIT;
-    lnd.Palette[WHITE]      =   WHITE_15BIT;
-    lnd.Palette[ORANGE]     =   ORANGE_15BIT;
-    lnd.Palette[MAGENTA]    =   MAGENTA_15BIT;
-    lnd.Palette[SALMON]     =   SALMON_15BIT;
-    lnd.Palette[DIRT]       =   DIRT_15BIT;
-    lnd.Palette[DARKBG]     =   DARKBG_15BIT;
-    // Gets the DS ready to write to VRAM
-    DC_FlushRange(lnd.Palette, BG_PAL_LEN);
-    // Writes Palette to VRAM
-    dmaCopy(lnd.Palette, BG_PALETTE, BG_PAL_LEN);
-    lnd.colorI = DIRT;
-    lnd.backgroundColorI = DARKBG;
-    lnd.fill(lnd.backgroundColorI); // makes all pixels of the background blue
-    lnd.initCosLandscape(); //Calculates heights for a Landscape
-    lnd.fillLandscape(); // Sets the landscape based on heights
-}
-
 void initObjects(landscape &lnd) {
     /* We just copy over the background palette for sprites, because
      * We don't really need that much different colors...
@@ -63,15 +33,13 @@ int main() {
 
     game->videoInit();
 
-    initBackgrounds(); // Configure the background control register
-
     landscape mountain; // Sets up (empty) landscap-background
-    initLandscape(object::land1); // Put stuff in the landscape
+    game->initLandscape(); // Put stuff in the landscape
 
     // Sets up background preferences and stores background id in bg2
     int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
-    initObjects(object::land1); // Sets stuff so objects will work
+    initObjects(LANDSCAPE1); // Sets stuff so objects will work
 
     // Create 10 players
     u8 players_count = 10;
@@ -102,8 +70,8 @@ int main() {
         bombs[0].updateOAM();
         oamUpdate(&oamMain);
         // Updates the Landscape and Background
-        DC_FlushRange(object::land1.Bitmap, BG_BITMAP_LEN);
-        dmaCopy(object::land1.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
+        DC_FlushRange(LANDSCAPE1.Bitmap, BG_BITMAP_LEN);
+        dmaCopy(LANDSCAPE1.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
     }
     return 0;
 }

@@ -28,7 +28,7 @@ int main() {
     // Sets up background preferences and stores background id in bg2
     int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
-    game->initObjects(); // Sets stuff so objects will work
+    game->initSprites(); // Sets stuff so objects will work
 
     // Create 10 players
     u8 players_count = 10;

@@ -83,7 +83,7 @@ void gamestate::initLandscape() {
     landscape1.fillLandscape(); // Sets the landscape based on heights
 }
 
-void gamestate::initObjects() {
+void gamestate::initSprites() {
     /* We just copy over the background palette for sprites, because
      * We don't really need that much different colors...
      */

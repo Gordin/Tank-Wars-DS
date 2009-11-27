@@ -22,6 +22,8 @@ class gamestate {
 
         static u8 state;
 
+        u8 bg[4];
+
         landscape landscape1;
         landscape landscape2;
 

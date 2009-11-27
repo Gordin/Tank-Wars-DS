@@ -26,7 +26,7 @@ int main() {
     game->initLandscape(); // Put stuff in the landscape
 
     // Sets up background preferences and stores background id in bg2
-    int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
+    game->bg[2] = bgInit(2, BgType_Bmp8, BgSize_B8_256x256, 0,0);
 
     game->initSprites(); // Sets stuff so objects will work
 
@@ -60,7 +60,7 @@ int main() {
         oamUpdate(&oamMain);
         // Updates the Landscape and Background
         DC_FlushRange(game->landscape1.Bitmap, BG_BITMAP_LEN);
-        dmaCopy(game->landscape1.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
+        dmaCopy(game->landscape1.Bitmap, bgGetGfxPtr(game->bg[2]), BG_BITMAP_LEN);
     }
     return 0;
 }

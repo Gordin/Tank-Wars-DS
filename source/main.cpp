@@ -59,8 +59,8 @@ int main() {
         bombs[0].updateOAM();
         oamUpdate(&oamMain);
         // Updates the Landscape and Background
-        DC_FlushRange(LANDSCAPE1.Bitmap, BG_BITMAP_LEN);
-        dmaCopy(LANDSCAPE1.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
+        DC_FlushRange(game->landscape1.Bitmap, BG_BITMAP_LEN);
+        dmaCopy(game->landscape1.Bitmap, bgGetGfxPtr(bg2), BG_BITMAP_LEN);
     }
     return 0;
 }

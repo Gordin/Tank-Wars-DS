@@ -4,7 +4,8 @@
 #include "objects.h"
 
 Vector2D object::gravity(0,10);
-gamestate* object::game = false;
+landscape* object::landscape1;
+landscape* object::landscape2;
 
 object::object(u8 id, u8 type) {
     this->type = type;

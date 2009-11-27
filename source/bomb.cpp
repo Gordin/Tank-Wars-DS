@@ -49,7 +49,7 @@ void bomb::checkGround() {
     s16 X = getX();
     s16 Y = getY();
     // Collision Detection Bomb <-> Landscape
-    if(LANDSCAPE1.getPixColorI(X,Y) == LANDSCAPE1.colorI) {
+    if(landscape1->getPixColorI(X,Y) == landscape1->colorI) {
         speed.x = -speed.x;
         speed.y = -speed.y;
     }

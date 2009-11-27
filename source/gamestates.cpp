@@ -5,7 +5,6 @@
 u8 gamestate::state = INIT;
 
 gamestate::gamestate() {
-    object::game = this;
 }
 
 gamestate::~gamestate() {
@@ -81,6 +80,8 @@ void gamestate::initLandscape() {
     landscape1.fill(landscape1.backgroundColorI); // makes all pixels of the background blue
     landscape1.initCosLandscape(); //Calculates heights for a Landscape
     landscape1.fillLandscape(); // Sets the landscape based on heights
+
+    object::landscape1 = &landscape1;
 }
 
 void gamestate::initSprites() {

@@ -26,7 +26,8 @@ class object {
 
         //static u8 count;
         static Vector2D gravity;
-        static gamestate* game;
+        static landscape* landscape1;
+        static landscape* landscape2;
 
         u8 id;
         u8 type;

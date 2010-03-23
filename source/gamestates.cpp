@@ -94,3 +94,10 @@ void gamestate::initSprites() {
     // This tells the DS how the sprite data is formatted
     oamInit(&oamMain, SpriteMapping_1D_32, false);
 }
+
+void gamestate::battleLoop() {
+        oamUpdate(&oamMain);
+        // Updates the Landscape and Background
+        DC_FlushRange(landscape1.Bitmap, BG_BITMAP_LEN);
+        dmaCopy(landscape1.Bitmap, bgGetGfxPtr(bg[2]), BG_BITMAP_LEN);
+}

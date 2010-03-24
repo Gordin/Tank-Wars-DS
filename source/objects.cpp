@@ -7,6 +7,9 @@ Vector2D object::gravity(0,10);
 landscape* object::landscape1;
 landscape* object::landscape2;
 
+object::object() {
+}
+
 object::object(u8 id, u8 type) {
     this->type = type;
     this->id = id;

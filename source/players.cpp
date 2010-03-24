@@ -51,7 +51,7 @@ void player::setSprite() {
     radius.x = TANK_RADIUS_X;
     radius.y = TANK_RADIUS_Y;
     //XXX places the tank on the screen
-    setXY(20 * (id + 1), 15);
+    setXY(24 * (id + 1) - 5, 15);
 }
 
 void player::checkSides() {
@@ -98,9 +98,10 @@ void player::initialFall() {
     }
 }
 
-player::player(): object(count++, TANK) {
-    pid = count;
-    setSprite();
+//player::player(): object(count++, TANK) {
+player::player() {
+    //pid = count;
+    //setSprite();
 }
 
 player::player(u8 pid): object(count++, TANK) {

@@ -2,7 +2,6 @@
 #define __OBJECTS_H
 
 #include "includes_all.h"
-#include "gamestates.h"
 #include "background.h"
 
 #define BOMB    0
@@ -11,6 +10,7 @@
 class object {
     public:
         object (u8 id, u8 type);
+        object ();
         virtual ~object();
 
         void setX(u16 X);

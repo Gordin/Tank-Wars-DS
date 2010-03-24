@@ -30,34 +30,13 @@ int main() {
 
     game->initSprites(); // Sets stuff so objects will work
 
-    // Create 10 players
-    u8 players_count = 10;
-    player players[players_count];
-
-    // Create 1 bomb
-    bomb bombs[1];
-    bombs[0].setXY(50, 100);
-    bombs[0].acceleration.x = 450;
-    bombs[0].acceleration.y = -450;
-
     // *** Debug start ***
     iprintf("No Fail!\n");
     // *** Debug end   ***
 
     while(1) { // Main game loop
-        // applies Gravity to all objects (moves them)
-        for(u8 i = 0; i < players_count; i += 1) {
-            players[i].applyGravity();
-        }
-        bombs[0].applyGravity();
-        //mountain.dropLandscape();
-        swiWaitForVBlank(); // Wait for a good time to put stuff in OAM
-        // Put objects in OAM
-        for(u8 i = 0; i < players_count; i += 1) {
-            players[i].updateOAM();
-        }
-        bombs[0].updateOAM();
-        game->battleLoop();
+        game->battleInit();
     }
+
     return 0;
 }

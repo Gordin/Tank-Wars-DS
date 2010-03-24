@@ -1,5 +1,4 @@
 #include "includes_all.h"
-#include "objects.h"
 #include "gamestates.h"
 
 u8 gamestate::state = INIT;
@@ -95,9 +94,48 @@ void gamestate::initSprites() {
     oamInit(&oamMain, SpriteMapping_1D_32, false);
 }
 
+void gamestate::battleInit() {
+    // Create 10 players
+    players_count = 10;
+    for(u8 i = 0; i < players_count; i +=1) {
+        iprintf("Erzeuge Player %i\n", i);
+        players[i] = * new player(i);
+        iprintf("X: %i Y: %i\n", players[i].getX(), players[i].getY());
+    }
+
+    // Create 1 bomb
+    bombs[0] = * new bomb();
+    bombs[0].setXY(50, 100);
+    bombs[0].acceleration.x = 450;
+    bombs[0].acceleration.y = -450;
+
+    battleLoop();
+}
+
+void gamestate::battlePlayerControl() {
+}
+
+void gamestate::battleAction() {
+    // applies Gravity to all objects (moves them)
+    for(u8 i = 0; i < players_count; i += 1) {
+        players[i].applyGravity();
+    }
+    bombs[0].applyGravity();
+    //mountain.dropLandscape();
+    swiWaitForVBlank(); // Wait for a good time to put stuff in OAM
+    // Put objects in OAM
+    for(u8 i = 0; i < players_count; i += 1) {
+        players[i].updateOAM();
+    }
+    bombs[0].updateOAM();
+    oamUpdate(&oamMain);
+    // Updates the Landscape and Background
+    DC_FlushRange(landscape1.Bitmap, BG_BITMAP_LEN);
+    dmaCopy(landscape1.Bitmap, bgGetGfxPtr(bg[2]), BG_BITMAP_LEN);
+}
+
 void gamestate::battleLoop() {
-        oamUpdate(&oamMain);
-        // Updates the Landscape and Background
-        DC_FlushRange(landscape1.Bitmap, BG_BITMAP_LEN);
-        dmaCopy(landscape1.Bitmap, bgGetGfxPtr(bg[2]), BG_BITMAP_LEN);
+    while(1){
+        battleAction();
+    }
 }

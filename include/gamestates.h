@@ -2,6 +2,9 @@
 #define __GAMESTATES_H
 
 #include "background.h"
+#include "objects.h"
+#include "bomb.h"
+#include "players.h"
 
 #define INIT            0
 #define MENU            1
@@ -19,9 +22,16 @@ class gamestate {
         void videoInit();
         void initLandscape();
         void initSprites();
+        void battleInit();
+        void battlePlayerControl();
+        void battleAction();
         void battleLoop();
 
         static u8 state;
+        u8 players_count;
+
+        bomb bombs[10];
+        player players[10];
 
         u8 bg[4];
 

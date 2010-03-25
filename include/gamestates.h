@@ -30,9 +30,11 @@ class gamestate {
         static u8 state;
         u8 players_count;
 
+        // Max values (Maybe change Bomb value?)
         bomb bombs[10];
         player players[10];
 
+        // 4 different backgrounds possible
         u8 bg[4];
 
         landscape landscape1;

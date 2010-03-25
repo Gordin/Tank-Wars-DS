@@ -76,7 +76,8 @@ void gamestate::initLandscape() {
     dmaCopy(landscape1.Palette, BG_PALETTE, BG_PAL_LEN);
     landscape1.colorI = DIRT;
     landscape1.backgroundColorI = DARKBG;
-    landscape1.fill(landscape1.backgroundColorI); // makes all pixels of the background blue
+    // makes all pixels of the background blue
+    landscape1.fill(landscape1.backgroundColorI);
     landscape1.initCosLandscape(); //Calculates heights for a Landscape
     landscape1.fillLandscape(); // Sets the landscape based on heights
 
@@ -121,7 +122,7 @@ void gamestate::battleAction() {
         players[i].applyGravity();
     }
     bombs[0].applyGravity();
-    //mountain.dropLandscape();
+    //landscape1.dropLandscape();
     swiWaitForVBlank(); // Wait for a good time to put stuff in OAM
     // Put objects in OAM
     for(u8 i = 0; i < players_count; i += 1) {

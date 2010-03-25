@@ -22,7 +22,6 @@ int main() {
 
     game->videoInit();
 
-    landscape mountain; // Sets up (empty) landscap-background
     game->initLandscape(); // Put stuff in the landscape
 
     // Sets up background preferences and stores background id in bg2
